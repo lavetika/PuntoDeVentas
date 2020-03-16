@@ -2,11 +2,17 @@
 package objetoNegocio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,12 +29,15 @@ public class Producto implements Serializable {
     private Proveedor proveedor;
     private Categoria categoria;
     private Integer stock;
-    private Float precioActual;    
+    private Float precioActual;
+    private List<rel_productosventas> ventas;    
 
     public Producto() {
+        this.ventas = new ArrayList<>();
     }
 
     public Producto(String nombre, Proveedor proveedor, Categoria categoria, Integer stock, Float precioActual) {
+        this();
         this.nombre = nombre;
         this.proveedor = proveedor;
         this.categoria = categoria;
@@ -37,6 +46,7 @@ public class Producto implements Serializable {
     }
 
     public Producto(Long id, String nombre, Proveedor proveedor, Categoria categoria, Integer stock, Float precioActual) {
+        this();
         this.id = id;
         this.nombre = nombre;
         this.proveedor = proveedor;
@@ -56,6 +66,7 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
+    @Column (name = "Nombre", nullable = false)
     public String getNombre() {
         return nombre;
     }
@@ -63,7 +74,9 @@ public class Producto implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
+    @ManyToOne()
+    @JoinColumn(name = "IdProveedor", nullable = false)
     public Proveedor getProveedor() {
         return proveedor;
     }
@@ -71,15 +84,19 @@ public class Producto implements Serializable {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
-
+    
+    @ManyToOne
+    @JoinColumn(name = "IdCategoria", nullable = false)
     public Categoria getCategoria() {
         return categoria;
     }
-
+    
+    
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
+    @Column (name = "Stock", nullable = false)
     public Integer getStock() {
         return stock;
     }
@@ -88,6 +105,7 @@ public class Producto implements Serializable {
         this.stock = stock;
     }
 
+    @Column (name = "PrecioActual", nullable = false)
     public Float getPrecioActual() {
         return precioActual;
     }
@@ -95,6 +113,16 @@ public class Producto implements Serializable {
     public void setPrecioActual(Float precioActual) {
         this.precioActual = precioActual;
     } 
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    public List<rel_productosventas> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<rel_productosventas> ventas) {
+        this.ventas = ventas;
+    }
+    
     
     @Override
     public int hashCode() {

@@ -2,11 +2,15 @@
 package objetoNegocio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,16 +24,20 @@ public class Categoria implements Serializable {
     private static final long serialVersionUID = 1L;   
     private Long id;
     private String nombre, descripcion;
+    private List<Producto> productos;
 
     public Categoria() {
+        this.productos = new ArrayList<>();
     }
 
     public Categoria(String nombre, String descripcion) {
+        this();
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
     public Categoria(Long id, String nombre, String descripcion) {
+        this();
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -46,7 +54,7 @@ public class Categoria implements Serializable {
         this.id = id;
     }
 
-    @Column (name = "Nombre")
+    @Column (name = "Nombre", nullable = false)
     public String getNombre() {
         return nombre;
     }
@@ -55,13 +63,22 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
-    @Column(name = "Descripción")
+    @Column(name = "Descripción", nullable = false)
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 
     

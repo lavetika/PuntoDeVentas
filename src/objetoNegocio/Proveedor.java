@@ -1,11 +1,15 @@
 package objetoNegocio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,12 +22,15 @@ public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
-    private String rfc, nombre, direccion, telefono, paginaWeb;            
+    private String rfc, nombre, direccion, telefono, paginaWeb;
+    private List<Producto> productos;
 
     public Proveedor() {
+        this.productos = new ArrayList<>();
     }
 
     public Proveedor(String rfc, String nombre, String direccion, String telefono, String paginaWeb) {
+        this();
         this.rfc = rfc;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -32,6 +39,7 @@ public class Proveedor implements Serializable {
     }
 
     public Proveedor(Long id, String rfc, String nombre, String direccion, String telefono, String paginaWeb) {
+        this();
         this.id = id;
         this.rfc = rfc;
         this.nombre = nombre;
@@ -51,7 +59,7 @@ public class Proveedor implements Serializable {
         this.id = id;
     }
     
-    @Column (name = "RFC")
+    @Column (name = "RFC", nullable = false)
     public String getRfc() {
         return rfc;
     }
@@ -60,7 +68,7 @@ public class Proveedor implements Serializable {
         this.rfc = rfc;
     }
 
-    @Column (name = "Nombre")
+    @Column (name = "Nombre", nullable = false)
     public String getNombre() {
         return nombre;
     }
@@ -69,7 +77,7 @@ public class Proveedor implements Serializable {
         this.nombre = nombre;
     }
 
-    @Column (name = "Dirección")
+    @Column (name = "Dirección", nullable = false)
     public String getDireccion() {
         return direccion;
     }
@@ -78,7 +86,7 @@ public class Proveedor implements Serializable {
         this.direccion = direccion;
     }
 
-    @Column(name = "Telefono")
+    @Column(name = "Telefono", nullable = true)
     public String getTelefono() {
         return telefono;
     }
@@ -87,7 +95,7 @@ public class Proveedor implements Serializable {
         this.telefono = telefono;
     }
 
-    @Column(name = "Página Web")
+    @Column(name = "Página Web", nullable = true)
     public String getPaginaWeb() {
         return paginaWeb;
     }
@@ -95,7 +103,17 @@ public class Proveedor implements Serializable {
     public void setPaginaWeb(String paginaWeb) {
         this.paginaWeb = paginaWeb;
     }
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
+    public List<Producto> getProductos() {
+        return productos;
+    }
 
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
+
+    
     
     
     @Override

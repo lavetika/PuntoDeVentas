@@ -2,11 +2,15 @@
 package objetoNegocio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,11 +24,14 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String rfc, nombre, direccion, telefono1, telefono2;
+    private List<Venta> ventas;
 
     public Cliente() {
+        this.ventas = new ArrayList<>();
     }
 
     public Cliente(String rfc, String nombre, String direccion, String telefono1, String telefono2) {
+        this();
         this.rfc = rfc;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -33,6 +40,7 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(Long id, String rfc, String nombre, String direccion, String telefono1, String telefono2) {
+        this();
         this.id = id;
         this.rfc = rfc;
         this.nombre = nombre;
@@ -52,7 +60,7 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "RFC")
+    @Column(name = "RFC", nullable = false)
     public String getRfc() {
         return rfc;
     }
@@ -61,7 +69,7 @@ public class Cliente implements Serializable {
         this.rfc = rfc;
     }
 
-    @Column (name = "Nombre")
+    @Column (name = "Nombre", nullable = false)
     public String getNombre() {
         return nombre;
     }
@@ -70,7 +78,7 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
     }
 
-    @Column (name = "Dirección")
+    @Column (name = "Dirección", nullable = false)
     public String getDireccion() {
         return direccion;
     }
@@ -95,7 +103,17 @@ public class Cliente implements Serializable {
 
     public void setTelefono2(String telefono2) {
         this.telefono2 = telefono2;
-    }   
+    }
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
+    }
+    
     
     @Override
     public int hashCode() {

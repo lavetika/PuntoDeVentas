@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -52,7 +54,8 @@ public class rel_productosventas implements Serializable {
         this.id = id;
     }
 
-    
+    @ManyToOne
+    @JoinColumn(name = "IdProducto", nullable = false)
     public Producto getProducto() {
         return producto;
     }
@@ -60,7 +63,9 @@ public class rel_productosventas implements Serializable {
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
-
+    
+    @ManyToOne
+    @JoinColumn(name = "IdVenta", nullable = false)
     public Venta getVenta() {
         return venta;
     }

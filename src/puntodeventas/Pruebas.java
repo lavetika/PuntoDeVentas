@@ -5,6 +5,10 @@
  */
 package puntodeventas;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * @author laura
@@ -15,7 +19,10 @@ public class Pruebas {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        EntityManagerFactory emFactory = 
+                Persistence.createEntityManagerFactory("PuntoDeVentasPU");
+        EntityManager entityManager = emFactory.createEntityManager();         
+        entityManager.getTransaction().begin();   
     }
     
 }
