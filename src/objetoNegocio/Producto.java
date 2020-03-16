@@ -2,6 +2,7 @@
 package objetoNegocio;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,6 +46,7 @@ public class Producto implements Serializable {
     }       
     
     @Id
+    @Column (name = "IdProducto")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
@@ -92,9 +94,7 @@ public class Producto implements Serializable {
 
     public void setPrecioActual(Float precioActual) {
         this.precioActual = precioActual;
-    }
-
-    
+    } 
     
     @Override
     public int hashCode() {
