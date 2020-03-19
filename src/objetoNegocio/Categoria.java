@@ -81,8 +81,6 @@ public class Categoria implements Serializable {
         this.productos = productos;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;

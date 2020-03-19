@@ -112,9 +112,6 @@ public class Proveedor implements Serializable {
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-
-    
-    
     
     @Override
     public int hashCode() {

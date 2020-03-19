@@ -111,7 +111,6 @@ public class Venta implements Serializable {
     public void setProductos(List<rel_productosventas> productos) {
         this.productos = productos;
     }
-
     
     @Override
     public int hashCode() {

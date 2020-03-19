@@ -114,7 +114,6 @@ public class Cliente implements Serializable {
         this.ventas = ventas;
     }
     
-    
     @Override
     public int hashCode() {
         int hash = 0;

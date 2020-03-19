@@ -123,7 +123,6 @@ public class Producto implements Serializable {
         this.ventas = ventas;
     }
     
-    
     @Override
     public int hashCode() {
         int hash = 0;
