@@ -5,6 +5,12 @@
  */
 package Forms;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Estefanía Aguilar
@@ -18,6 +24,14 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Registro de venta");
         this.setLocationRelativeTo(null);
+        //Imagen de fondo
+        try {
+            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
+            JPanel panel = (JPanel) this.getContentPane();
+            panel.setBorder(fondo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -29,16 +43,146 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFondo = new javax.swing.JLabel();
+        lbCliente = new javax.swing.JLabel();
+        lbSubtotal = new javax.swing.JLabel();
+        lbDescuento = new javax.swing.JLabel();
+        lbTotal = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btnCancelar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        txtDescuento = new javax.swing.JTextField();
+        txtSubtotal = new javax.swing.JTextField();
+        cbCliente = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        lbBuscador = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        lbBuscador1 = new javax.swing.JLabel();
+        txtBuscador = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lbProductos = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1318, 598));
+        setPreferredSize(new java.awt.Dimension(1318, 598));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancosolido.jpg"))); // NOI18N
-        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 480));
+        lbCliente.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbCliente.setText("CLIENTE");
+        getContentPane().add(lbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 110, -1));
+
+        lbSubtotal.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbSubtotal.setText("SUBTOTAL");
+        getContentPane().add(lbSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 130, -1));
+
+        lbDescuento.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbDescuento.setText("DESCUENTO");
+        getContentPane().add(lbDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 150, -1));
+
+        lbTotal.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbTotal.setText("TOTAL");
+        getContentPane().add(lbTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 90, -1));
+
+        txtTotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 310, 30));
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE VENTAS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 250, -1));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 760, 170));
+
+        btnCancelar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 140, 40));
+
+        btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        btnGuardar.setText("Guardar");
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 160, 40));
+
+        txtDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 310, 30));
+
+        txtSubtotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 310, 30));
+
+        cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 310, 30));
+
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 800, 250));
+
+        lbBuscador.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbBuscador.setText("BUSCADOR DE PRODUCTOS");
+        getContentPane().add(lbBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, 30));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable3);
+
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 760, 170));
+
+        lbBuscador1.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbBuscador1.setText("BUSCADOR DE PRODUCTOS");
+        getContentPane().add(lbBuscador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, -1));
+        getContentPane().add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, 340, 30));
+
+        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 800, 270));
+
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 470, 430));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 470, 90));
+
+        lbProductos.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbProductos.setText("PRODUCTOS SELECCIONADOS");
+        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, -1, -1));
+
+        btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 30, 100, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,6 +221,29 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblFondo;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cbCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JLabel lbBuscador;
+    private javax.swing.JLabel lbBuscador1;
+    private javax.swing.JLabel lbCliente;
+    private javax.swing.JLabel lbDescuento;
+    private javax.swing.JLabel lbProductos;
+    private javax.swing.JLabel lbSubtotal;
+    private javax.swing.JLabel lbTotal;
+    private javax.swing.JTextField txtBuscador;
+    private javax.swing.JTextField txtDescuento;
+    private javax.swing.JTextField txtSubtotal;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

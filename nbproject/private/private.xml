@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/Forms/FmCategoria.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/objetoNegocio/Categoria.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/objetoNegocio/Producto.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/objetoNegocio/Cliente.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/objetoNegocio/Venta.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/Forms/FmCliente.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/Forms/FmBusquedaVentas.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/Forms/FmRegistroVentas.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/objetoNegocio/rel_productosventas.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/Forms/FmProveedor.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/objetoNegocio/Proveedor.java</file>
-            <file>file:/C:/Users/Estefanía%20Aguilar/Desktop/PuntoDeVentas/src/Forms/FmProducto.java</file>
+            <file>file:/C:/Users/laura/PuntoDeVentas/src/Forms/FmCategoria.java</file>
+            <file>file:/C:/Users/laura/PuntoDeVentas/src/Forms/FmProducto.java</file>
+            <file>file:/C:/Users/laura/PuntoDeVentas/src/Forms/FmBusquedaVentas.java</file>
+            <file>file:/C:/Users/laura/PuntoDeVentas/src/Forms/FmRegistroVentas.java</file>
         </group>
     </open-files>
 </project-private>

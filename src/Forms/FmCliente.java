@@ -5,6 +5,12 @@
  */
 package Forms;
 
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Estefanía Aguilar
@@ -18,6 +24,15 @@ public class FmCliente extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Cliente");
         this.setLocationRelativeTo(null);
+        //Imagen de fondo
+        try {
+            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
+            JPanel panel = (JPanel) this.getContentPane();
+            panel.setBorder(fondo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
 
     /**
@@ -29,16 +44,128 @@ public class FmCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFondo = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
+        lbNombre = new javax.swing.JLabel();
+        lbRFC = new javax.swing.JLabel();
+        lbDireccion = new javax.swing.JLabel();
+        lbTelefonoF = new javax.swing.JLabel();
+        lbTelefonoM = new javax.swing.JLabel();
+        txtTelefonoF = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtTelefonoM = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btnCancelar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtRFC = new javax.swing.JTextField();
+        txtID = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(655, 665));
+        setPreferredSize(new java.awt.Dimension(655, 665));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancoconcuadros.jpg"))); // NOI18N
-        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        lblID.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lblID.setText("ID");
+        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        lbNombre.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbNombre.setText("NOMBRE");
+        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+
+        lbRFC.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbRFC.setText("RFC");
+        getContentPane().add(lbRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+
+        lbDireccion.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbDireccion.setText("DIRECCIÓN");
+        getContentPane().add(lbDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
+
+        lbTelefonoF.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbTelefonoF.setText("TELEFONO FIJO");
+        getContentPane().add(lbTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
+
+        lbTelefonoM.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbTelefonoM.setText("TELEFONO MOVIL");
+        getContentPane().add(lbTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+
+        txtTelefonoF.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtTelefonoF.setText("OPCIONAL");
+        getContentPane().add(txtTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 230, 30));
+
+        txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 230, 30));
+
+        txtDireccion.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 230, 30));
+
+        txtTelefonoM.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtTelefonoM.setText("OPCIONAL");
+        getContentPane().add(txtTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 230, 30));
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE CLIENTE");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 580, 170));
+
+        btnCancelar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 120, 40));
+
+        btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        btnGuardar.setText("Guardar");
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 120, 40));
+
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 620, 210));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 620, 50));
+
+        txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 230, 30));
+
+        txtID.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 230, 30));
+
+        jButton1.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        jButton1.setText("Eliminar");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 270, 120, 40));
+
+        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 620, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -76,6 +203,26 @@ public class FmCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblFondo;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JLabel lbDireccion;
+    private javax.swing.JLabel lbNombre;
+    private javax.swing.JLabel lbRFC;
+    private javax.swing.JLabel lbTelefonoF;
+    private javax.swing.JLabel lbTelefonoM;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtRFC;
+    private javax.swing.JTextField txtTelefonoF;
+    private javax.swing.JTextField txtTelefonoM;
     // End of variables declaration//GEN-END:variables
 }
