@@ -5,17 +5,33 @@
  */
 package Forms;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import objetoNegocio.Categoria;
+import objetoNegocio.Producto;
+import objetoNegocio.Proveedor;
+import repositories.CategoriaRepository;
+import repositories.ProductoRepository;
+import repositories.ProveedorRepository;
 
 /**
  *
  * @author Estefanía Aguilar
  */
 public class FmProducto extends javax.swing.JFrame {
+    
+    ProductoRepository productoRepository;
+    ProveedorRepository proveedorRepository;
+    CategoriaRepository categoriaRepository;
 
     /**
      * Creates new form FmProducto
@@ -25,6 +41,12 @@ public class FmProducto extends javax.swing.JFrame {
         this.setTitle("Producto");
         this.setLocationRelativeTo(null);
         this.setSize(620,666);
+        this.productoRepository = new ProductoRepository();
+        this.proveedorRepository = new ProveedorRepository();
+        this.categoriaRepository = new CategoriaRepository();
+        this.cargarTabla();
+        agregarCategorias();
+        agregarProveedores();
         //Imagen de fondo
         try {
             ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
@@ -33,6 +55,8 @@ public class FmProducto extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        txtID.setEnabled(false);
         
     }
 
@@ -64,12 +88,13 @@ public class FmProducto extends javax.swing.JFrame {
         cbProveedor = new javax.swing.JComboBox<>();
         lbRegistroProductos = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbProductos = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -142,18 +167,23 @@ public class FmProducto extends javax.swing.JFrame {
         lbRegistroProductos.setText("REGISTRO DE PRODUCTOS");
         getContentPane().add(lbRegistroProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "NOMBRE", "PROVEEDOR", "CATEGORIA", "STOCK", "PRECIO ACTUAL"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        tbProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbProductosMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tbProductos);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 540, 170));
 
@@ -164,31 +194,175 @@ public class FmProducto extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 120, 40));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 110, 30));
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 120, 40));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 110, 30));
 
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 580, 210));
 
-        jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 580, 320));
-
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 50));
+
+        btnEliminar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 110, 30));
+
+        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 580, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        //Boton para editar
+        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
+            txtNombre.setEnabled(true);
+            txtPrecio.setEnabled(true);
+            txtStock.setEnabled(true);
+            cbCategoria.setEnabled(true);
+            cbProveedor.setEnabled(true);
+            btnGuardar.setText("Actualizar");
+            
+        }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() 
+                && !txtStock.getText().isEmpty()){
+            Proveedor proveedor = (Proveedor)cbProveedor.getSelectedItem();
+            Categoria categoria = (Categoria)cbCategoria.getSelectedItem();
+            
+            //Se actualiza en la base de datos
+            productoRepository.actualizar(new Producto(Long.parseLong(txtID.getText()), txtNombre.getText(), proveedor, categoria, 
+                    Integer.parseInt(txtStock.getText()), Float.valueOf(txtPrecio.getText())));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtPrecio.setBorder(txtID.getBorder());
+            txtStock.setBorder(txtID.getBorder());
+         
+        //Validar que todos los campos esten llenos
+        }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() && !txtStock.getText().isEmpty()){
+            
+            Proveedor proveedor = (Proveedor)cbProveedor.getSelectedItem();
+            Categoria categoria = (Categoria)cbCategoria.getSelectedItem();
+            
+            //Guardar en la base de datos
+            productoRepository.guardar(new Producto(txtNombre.getText(), proveedor, categoria, Integer.parseInt(txtStock.getText()), 
+                    Float.valueOf(txtPrecio.getText())));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtPrecio.setBorder(txtID.getBorder());
+            txtStock.setBorder(txtID.getBorder());
+            
+        }else{
+            //Todos los campos son obligatorios
+            LineBorder border = new LineBorder(Color.red);
+            txtNombre.setBorder(border);
+            txtPrecio.setBorder(border);
+            txtStock.setBorder(border);
+        }
+        cargarTabla();
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
+        mostrarInfo();
+        btnGuardar.setText("Editar");
+    }//GEN-LAST:event_tbProductosMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int indiceFila = tbProductos.getSelectedRow();
+        if(indiceFila == -1){
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Long idProducto = (Long)tbProductos.getValueAt(indiceFila, 0);
+            productoRepository.eliminar(idProducto);
+            limpiar();
+            cargarTabla();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    public void agregarProveedores(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        ArrayList<Proveedor> proveedores = proveedorRepository.buscarTodas();
+        for (Proveedor proveedor: proveedores) {
+            modelo.addElement(proveedor);
+            
+        }
+        cbProveedor.setModel(modelo);
+    }
+    
+    public void agregarCategorias(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        ArrayList<Categoria> categorias = categoriaRepository.buscarTodas();
+        for (Categoria categoria: categorias) {
+            modelo.addElement(categoria);
+            
+        }
+        cbCategoria.setModel(modelo);
+    }
+    
+    private void mostrarInfo(){
+        int indiceFila = tbProductos.getSelectedRow();
+        Long idProducto = (Long)tbProductos.getValueAt(indiceFila, 0);
+            Producto producto = productoRepository.buscarPorId(idProducto);
+            
+            txtID.setText(String.valueOf(producto.getId()));
+            txtNombre.setText(producto.getNombre());
+            cbProveedor.setSelectedItem(productoRepository.obtenerProveedor(producto.getProveedor().getId())); 
+            cbCategoria.setSelectedItem(productoRepository.obtenerCategoria(producto.getCategoria().getId()));
+            txtStock.setText(String.valueOf(producto.getStock()));
+            txtPrecio.setText(String.valueOf(producto.getPrecioActual()));
+            
+            txtID.setEnabled(false);
+            txtPrecio.setEnabled(false);
+            txtNombre.setEnabled(false);
+            txtStock.setEnabled(false);
+            cbCategoria.setEnabled(false);
+            cbProveedor.setEnabled(false);
+    }
+    
+    private void limpiar(){
+        txtID.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        txtNombre.setEnabled(true);
+        txtPrecio.setEnabled(true);
+        txtStock.setEnabled(true);
+        btnGuardar.setText("Guardar");
+    }    
+    
+    private void cargarTabla(){
+        ArrayList<Producto> productos = productoRepository.buscarTodas();        
+        DefaultTableModel modelo = (DefaultTableModel)tbProductos.getModel();        
+        modelo.setRowCount(0);
+        for (Producto producto: productos) {
+            Object[] fila = new Object[8];
+            fila[0] = producto.getId();
+            fila[1] = producto.getNombre();
+            fila[2] = producto.getProveedor().getId();
+            fila[3] = producto.getCategoria().getId();
+            fila[4] = producto.getStock();
+            fila[5] = producto.getPrecioActual();
+            modelo.addRow(fila);
+        }
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -221,21 +395,22 @@ public class FmProducto extends javax.swing.JFrame {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbProveedor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbPrecio;
     private javax.swing.JLabel lbProveedor;
@@ -243,9 +418,11 @@ public class FmProducto extends javax.swing.JFrame {
     private javax.swing.JLabel lbStock;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblID;
+    private javax.swing.JTable tbProductos;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
+
 }

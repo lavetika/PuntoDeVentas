@@ -1,11 +1,19 @@
 
 package Forms;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import objetoNegocio.Categoria;
+import objetoNegocio.Producto;
+import objetoNegocio.Proveedor;
+import repositories.CategoriaRepository;
 
 /**
  *
@@ -13,6 +21,7 @@ import javax.swing.JPanel;
  */
 public class FmCategoria extends javax.swing.JFrame {
 
+    CategoriaRepository categoriaReposity;
     /**
      * Creates new form FmCategoria
      */
@@ -20,6 +29,8 @@ public class FmCategoria extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Categoría");
         this.setLocationRelativeTo(null);
+        this.categoriaReposity = new CategoriaRepository();
+        this.cargarTabla();
         //Imagen de fondo
         try {
             ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
@@ -28,6 +39,8 @@ public class FmCategoria extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        txtID.setEnabled(false);
     }
 
     /**
@@ -46,7 +59,7 @@ public class FmCategoria extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         lbRegistroCategorias = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbCategorias = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -57,7 +70,6 @@ public class FmCategoria extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(638, 527));
-        setPreferredSize(new java.awt.Dimension(638, 527));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblID.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -82,18 +94,23 @@ public class FmCategoria extends javax.swing.JFrame {
         lbRegistroCategorias.setText("REGISTRO DE CATEGORIAS");
         getContentPane().add(lbRegistroCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "NOMBRE", "DESCRICION"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        tbCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbCategoriasMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tbCategorias);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 560, 170));
 
@@ -108,6 +125,11 @@ public class FmCategoria extends javax.swing.JFrame {
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 110, 30));
 
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -135,16 +157,100 @@ public class FmCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int indiceFila = tbCategorias.getSelectedRow();
+        if(indiceFila == -1){
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Long proveedor = (Long)tbCategorias.getValueAt(indiceFila, 0);
+            categoriaReposity.eliminar(proveedor);
+            limpiar();
+            cargarTabla();
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
+            btnGuardar.setText("Actualizar");
+            txtNombre.setEnabled(true);
+            txtDescripcion.setEnabled(true);
+            
+        }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && 
+                !txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty()){
+            
+            //Se actualiza en la base de datos
+            categoriaReposity.actualizar(new Categoria(Long.parseLong(txtID.getText()), txtNombre.getText(), 
+                    txtDescripcion.getText()));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtDescripcion.setBorder(txtID.getBorder());
+            
+        //Validar que todos los campos esten llenos    
+        }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty() ){
+            
+            //Guardar en la base de datos
+            categoriaReposity.guardar(new Categoria(txtNombre.getText(), txtDescripcion.getText())); 
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtDescripcion.setBorder(txtID.getBorder());
+            
+        }else{
+            //Todos los campos son obligatorios
+            LineBorder border = new LineBorder(Color.red);
+            txtNombre.setBorder(border);
+            txtDescripcion.setBorder(border);
+        }
+        
+        
+        
+        cargarTabla();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tbCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCategoriasMouseClicked
+        mostrarInfo();
+        btnGuardar.setText("Editar");
+    }//GEN-LAST:event_tbCategoriasMouseClicked
+
+    private void limpiar(){
+        txtID.setText("");
+        txtNombre.setText("");;
+        txtDescripcion.setText("");
+        txtNombre.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        btnGuardar.setText("Guardar");
+    }
+    
+    private void cargarTabla(){
+        ArrayList<Categoria> categorias = categoriaReposity.buscarTodas();        
+        DefaultTableModel modelo = (DefaultTableModel)tbCategorias.getModel();        
+        modelo.setRowCount(0);
+        for (Categoria categoria: categorias) {
+            Object[] fila = new Object[8];
+            fila[0] = categoria.getId();
+            fila[1] = categoria.getNombre();
+            fila[2] = categoria.getDescripcion();
+            modelo.addRow(fila);
+        }
+    }
+    
+    private void mostrarInfo(){
+        int indiceFila = tbCategorias.getSelectedRow();
+        Long idCategoria = (Long)tbCategorias.getValueAt(indiceFila, 0);
+            Categoria categoria = categoriaReposity.buscarPorId(idCategoria);
+            
+            txtID.setText(String.valueOf(categoria.getId()));
+            txtNombre.setText(categoria.getNombre());
+            txtDescripcion.setText(categoria.getDescripcion());
+            
+            txtID.setEnabled(false);
+            txtNombre.setEnabled(false);
+            txtDescripcion.setEnabled(false);
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -185,11 +291,11 @@ public class FmCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lbDescripcion;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbRegistroCategorias;
     private javax.swing.JLabel lblID;
+    private javax.swing.JTable tbCategorias;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;

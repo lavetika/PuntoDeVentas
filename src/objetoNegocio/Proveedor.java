@@ -16,6 +16,7 @@ import javax.persistence.Table;
  *
  * @author laura
  */
+
 @Entity
 @Table (name = "Proveedores")
 public class Proveedor implements Serializable {
@@ -95,7 +96,7 @@ public class Proveedor implements Serializable {
         this.telefono = telefono;
     }
 
-    @Column(name = "Página Web", nullable = true)
+    @Column(name = "PáginaWeb", nullable = true)
     public String getPaginaWeb() {
         return paginaWeb;
     }
@@ -135,7 +136,7 @@ public class Proveedor implements Serializable {
 
     @Override
     public String toString() {
-        return "objetoNegocio.Proveedor[ id=" + id + " ]";
+        return id + " - " + rfc + " - " + nombre;
     }
     
 }

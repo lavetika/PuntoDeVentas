@@ -145,7 +145,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "objetoNegocio.Producto[ id=" + id + " ]";
+        return id + " - " + nombre;
     }
     
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import objetoNegocio.Categoria;
 import objetoNegocio.Producto;
 import objetoNegocio.Proveedor;
 
@@ -74,4 +75,19 @@ public class ProductoRepository extends BaseRepository<Producto>{
         return new ArrayList<>(productos);  
     }
     
+    public Proveedor obtenerProveedor(Long idProveedor) {
+        EntityManager entityManager = this.createEntityManager();
+        entityManager.getTransaction().begin();
+        Proveedor proveedor = entityManager.find(Proveedor.class, idProveedor);
+        entityManager.getTransaction().commit();
+        return proveedor;
+    }
+    
+    public Categoria obtenerCategoria(Long idCategoria) {
+        EntityManager entityManager = this.createEntityManager();
+        entityManager.getTransaction().begin();
+        Categoria categoria = entityManager.find(Categoria.class, idCategoria);
+        entityManager.getTransaction().commit();
+        return categoria;
+    }
 }
