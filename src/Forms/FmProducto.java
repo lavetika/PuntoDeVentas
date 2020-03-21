@@ -50,13 +50,13 @@ public class FmProducto extends javax.swing.JFrame {
         agregarCategorias();
         agregarProveedores();
         //Imagen de fondo
-        try {
-            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
-            JPanel panel = (JPanel) this.getContentPane();
-            panel.setBorder(fondo);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
+//            JPanel panel = (JPanel) this.getContentPane();
+//            panel.setBorder(fondo);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
         
         txtID.setEnabled(false);
         
@@ -217,13 +217,14 @@ public class FmProducto extends javax.swing.JFrame {
         });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 320, 110, 30));
 
+        btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMenuActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, -1, -1));
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, -1, -1));
 
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 580, 320));
@@ -238,57 +239,11 @@ public class FmProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.exit(0);
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        //Boton para editar
-        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
-            txtNombre.setEnabled(true);
-            txtPrecio.setEnabled(true);
-            txtStock.setEnabled(true);
-            cbCategoria.setEnabled(true);
-            cbProveedor.setEnabled(true);
-            btnGuardar.setText("Actualizar");
-            
-        }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() 
-                && !txtStock.getText().isEmpty()){
-            Proveedor proveedor = (Proveedor)cbProveedor.getSelectedItem();
-            Categoria categoria = (Categoria)cbCategoria.getSelectedItem();
-            
-            //Se actualiza en la base de datos
-            productoRepository.actualizar(new Producto(Long.parseLong(txtID.getText()), txtNombre.getText(), proveedor, categoria, 
-                    Integer.parseInt(txtStock.getText()), Float.valueOf(txtPrecio.getText())));
-            limpiar();
-            
-            txtNombre.setBorder(txtID.getBorder());
-            txtPrecio.setBorder(txtID.getBorder());
-            txtStock.setBorder(txtID.getBorder());
-         
-        //Validar que todos los campos esten llenos
-        }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() && !txtStock.getText().isEmpty()){
-            
-            Proveedor proveedor = (Proveedor)cbProveedor.getSelectedItem();
-            Categoria categoria = (Categoria)cbCategoria.getSelectedItem();
-            
-            //Guardar en la base de datos
-            productoRepository.guardar(new Producto(txtNombre.getText(), proveedor, categoria, Integer.parseInt(txtStock.getText()), 
-                    Float.valueOf(txtPrecio.getText())));
-            limpiar();
-            
-            txtNombre.setBorder(txtID.getBorder());
-            txtPrecio.setBorder(txtID.getBorder());
-            txtStock.setBorder(txtID.getBorder());
-            
-        }else{
-            //Todos los campos son obligatorios
-            LineBorder border = new LineBorder(Color.red);
-            txtNombre.setBorder(border);
-            txtPrecio.setBorder(border);
-            txtStock.setBorder(border);
-        }
-        cargarTabla();
-        
+        guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
@@ -297,6 +252,16 @@ public class FmProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_tbProductosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu ();
+        menu.show();
+        setVisible(false);
+    }//GEN-LAST:event_btnMenuActionPerformed
+    
+    private void eliminar(){
         int indiceFila = tbProductos.getSelectedRow();
         if(indiceFila == -1){
             JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
@@ -306,13 +271,8 @@ public class FmProducto extends javax.swing.JFrame {
             limpiar();
             cargarTabla();
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        Menu menu = new Menu ();
-        menu.show();
-    }//GEN-LAST:event_btnMenuActionPerformed
-
+    }
+            
     public void agregarProveedores(){
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         ArrayList<Proveedor> proveedores = proveedorRepository.buscarTodas();
@@ -363,7 +323,55 @@ public class FmProducto extends javax.swing.JFrame {
         txtStock.setEnabled(true);
         btnGuardar.setText("Guardar");
     }    
-    
+    private void guardar(){
+        //Boton para editar
+        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
+            txtNombre.setEnabled(true);
+            txtPrecio.setEnabled(true);
+            txtStock.setEnabled(true);
+            cbCategoria.setEnabled(true);
+            cbProveedor.setEnabled(true);
+            btnGuardar.setText("Actualizar");
+            
+        }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() 
+                && !txtStock.getText().isEmpty()){
+            Proveedor proveedor = (Proveedor)cbProveedor.getSelectedItem();
+            Categoria categoria = (Categoria)cbCategoria.getSelectedItem();
+            
+            //Se actualiza en la base de datos
+            productoRepository.actualizar(new Producto(Long.parseLong(txtID.getText()), txtNombre.getText(), proveedor, categoria, 
+                    Integer.parseInt(txtStock.getText()), Float.valueOf(txtPrecio.getText())));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtPrecio.setBorder(txtID.getBorder());
+            txtStock.setBorder(txtID.getBorder());
+         
+        //Validar que todos los campos esten llenos
+        }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtPrecio.getText().isEmpty() && !txtStock.getText().isEmpty()){
+            
+            Proveedor proveedor = (Proveedor)cbProveedor.getSelectedItem();
+            Categoria categoria = (Categoria)cbCategoria.getSelectedItem();
+            
+            //Guardar en la base de datos
+            productoRepository.guardar(new Producto(txtNombre.getText(), proveedor, categoria, Integer.parseInt(txtStock.getText()), 
+                    Float.valueOf(txtPrecio.getText())));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtPrecio.setBorder(txtID.getBorder());
+            txtStock.setBorder(txtID.getBorder());
+            
+        }else{
+            //Todos los campos son obligatorios
+            LineBorder border = new LineBorder(Color.red);
+            txtNombre.setBorder(border);
+            txtPrecio.setBorder(border);
+            txtStock.setBorder(border);
+        }
+        cargarTabla();
+        
+    }
     private void cargarTabla(){
         ArrayList<Producto> productos = productoRepository.buscarTodas();        
         DefaultTableModel modelo = (DefaultTableModel)tbProductos.getModel();        

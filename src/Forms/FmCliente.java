@@ -31,15 +31,15 @@ public class FmCliente extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.clienteRepository = new ClienteRepository();
         //Imagen de fondo
-        try {
-            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
-            JPanel panel = (JPanel) this.getContentPane();
-            panel.setBorder(fondo);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
+//            JPanel panel = (JPanel) this.getContentPane();
+//            panel.setBorder(fondo);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
         
-        txtID.setEditable(false);   
+        txtID.setEnabled(false);   
     }
 
     /**
@@ -165,6 +165,7 @@ public class FmCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 120, 30));
 
+        btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,7 +191,7 @@ public class FmCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cancelar();
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -204,6 +205,7 @@ public class FmCliente extends javax.swing.JFrame {
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         Menu menu = new Menu();
         menu.show();
+        setVisible(false);
     }//GEN-LAST:event_btnMenuActionPerformed
 
     public void guardar(){
@@ -263,9 +265,6 @@ public class FmCliente extends javax.swing.JFrame {
         }
     }
     
-    public void cancelar(){
-        System.exit(0);
-    }
     
        private void limpiar(){
         txtID.setText("");

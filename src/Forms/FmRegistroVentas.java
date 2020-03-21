@@ -5,20 +5,19 @@
  */
 package Forms;
 
-import imagenes.ImagenFondo;
-import java.io.File;
-import java.io.IOException;
+import Operaciones.Operaciones;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import objetoNegocio.Cliente;
 import objetoNegocio.Producto;
+import objetoNegocio.Proveedor;
 import objetoNegocio.Venta;
+import objetoNegocio.rel_productosventas;
+import repositories.ClienteRepository;
 import repositories.ProductoRepository;
 import repositories.VentaRepository;
 
@@ -28,9 +27,12 @@ import repositories.VentaRepository;
  */
 public class FmRegistroVentas extends javax.swing.JFrame {
     VentaRepository ventaRepository;
+    ClienteRepository clienteRepository;
     ProductoRepository productoRepository;
     List<Producto> carrito;
-    DefaultTableModel modelo;
+    List<Producto> mostrador;
+    DefaultTableModel modeloCarrito;
+    Operaciones caja;
     /**
      * Creates new form FmVenta
      */
@@ -41,15 +43,24 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         this.ventaRepository = new VentaRepository();
         this.carrito = new ArrayList<>();
         this.productoRepository = new ProductoRepository();
-        DefaultTableModel modelo = new DefaultTableModel();
+        this.clienteRepository = new ClienteRepository();
+        modeloCarrito = (DefaultTableModel) tbCarrito.getModel();
+        modeloCarrito.setRowCount(0);
+        mostrador = new ArrayList<>();
+        caja = new Operaciones();
+        agregarClientes();
+        
+        txtSubtotal.setEnabled(false);
+        txtTotal.setEnabled(false);
+       
         //Imagen de fondo
-        try {
-            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
-            JPanel panel = (JPanel) this.getContentPane();
-            panel.setBorder(fondo);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
+//            JPanel panel = (JPanel) this.getContentPane();
+//            panel.setBorder(fondo);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
         cargarTablaProductos();
     }
 
@@ -125,6 +136,11 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 "ID", "NOMBRE", "PRECIO ACTUAL", "CANTIDAD", "MONTO TOTAL"
             }
         ));
+        tbCarrito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbCarritoMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbCarrito);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 710, 170));
@@ -149,6 +165,17 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 200, 30));
 
         txtDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtDescuento.setText("0");
+        txtDescuento.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                txtDescuentoComponentAdded(evt);
+            }
+        });
+        txtDescuento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescuentoActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 270, 30));
 
         txtSubtotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
@@ -195,6 +222,8 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 30, 100, 30));
 
+        btnMenu.setBackground(new java.awt.Color(255, 255, 255));
+        btnMenu.setForeground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,16 +253,38 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.exit(0);
+        for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
+            modeloCarrito.removeRow(i);
+            
+        }
+        cargarTablaProductos();
+        carrito.clear();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+        guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
-
+     
         cargarTablaCarrito();
+        //Actualizar precios
+        List<Float> montosTotales = new ArrayList<>();
+        for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
+
+            //Se obtiene todos los precios totales del carrito
+            montosTotales.add((Float) modeloCarrito.getValueAt(i, 4));
+        }
+            //Se muestra los calculos en el campo
+            txtSubtotal.setText(String.valueOf(caja.subtotal(montosTotales)));
+            
+            
+//            txtTotal.setText(String.valueOf(caja.montoFinal(Float.parseFloat(txtSubtotal.getText()), Float.parseFloat(txtDescuento.getText()))));
+            /**
+             * Tengo un problema, necesito implementar esta linea de codigo pero no se donde, lo que necesito hacer es que esta linea de codigo se
+             * genere mientras el usuario le vaya ingresando datos campo de texto de descuento, pero no se que evento usar.
+             */
     }//GEN-LAST:event_tbProductosMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -243,13 +294,50 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         Menu menu = new Menu ();
         menu.show();
+        setVisible(false);
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    private void txtDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescuentoActionPerformed
+//        txtTotal.setText(String.valueOf(caja.montoFinal(Float.parseFloat(txtSubtotal.getText()), Float.parseFloat(txtDescuento.getText()))));
+    
+    }//GEN-LAST:event_txtDescuentoActionPerformed
+
+    private void txtDescuentoComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_txtDescuentoComponentAdded
+    }//GEN-LAST:event_txtDescuentoComponentAdded
+
+    private void tbCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCarritoMouseClicked
+         //Obtego el producto seleccionado de la tabla
+        int indiceFila = tbCarrito.getSelectedRow();
+        Long idProducto = (Long) tbCarrito.getValueAt(indiceFila, 0);
+        Producto producto = productoRepository.buscarPorId(idProducto);
+        
+        //Se obtiene la cantidad de producto que ya hay en el carrito a devolver.
+        int cantidad = (Integer) tbProductos.getValueAt(mostrador.indexOf(producto), 3);
+
+        //Validacion del stock
+        if (((Integer)(tbProductos.getValueAt(mostrador.indexOf(producto), 3))) < producto.getStock()) {
+
+            //Se modifican las celdas de cantidad
+            tbProductos.setValueAt((cantidad + 1), mostrador.indexOf(producto), 3);
+            
+            //Actualizar las celdas de cantidad de carrito.
+            int cantidadCarrito = (Integer) modeloCarrito.getValueAt(carrito.indexOf(producto), 3);
+            modeloCarrito.setValueAt((cantidadCarrito-1), carrito.indexOf(producto), 3);
+            
+            //Se elimina el producto del carrito si ya se regresaron todas las cantidades que tenian
+            if(((Integer)modeloCarrito.getValueAt(carrito.indexOf(producto), 3)) == 0){
+                modeloCarrito.removeRow(carrito.indexOf(producto));
+                carrito.remove(producto);
+            }
+        }
+            
+    }//GEN-LAST:event_tbCarritoMouseClicked
+
     private void cargarTablaProductos(){
-        ArrayList<Producto> productos = productoRepository.buscarTodas();        
+        mostrador = productoRepository.buscarTodas();        
         DefaultTableModel modelo1 = (DefaultTableModel)tbProductos.getModel();        
         modelo1.setRowCount(0);
-        for (Producto producto: productos) {
+        for (Producto producto: mostrador) {
             Object[] fila = new Object[4];
             fila[0] = producto.getId();
             fila[1] = producto.getNombre();
@@ -260,44 +348,85 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     }
     
     private void cargarTablaCarrito(){
-        int contador = 0;
         
         //Obtego el producto seleccionado de la tabla
         int indiceFila = tbProductos.getSelectedRow();
-        Long idProducto = (Long)tbProductos.getValueAt(indiceFila, 0);
+        Long idProducto = (Long) tbProductos.getValueAt(indiceFila, 0);
         Producto producto = productoRepository.buscarPorId(idProducto);
         
-        //Se añade producto al carrito
-        modelo = (DefaultTableModel) tbCarrito.getModel();
-        modelo.setRowCount(0);
-        Object[] fila = new Object[5];
-        
-        if (carrito.contains(producto) == false) {
-            contador++;
-            carrito.add(producto);
-            fila[0] = producto.getId();
-            fila[1] = producto.getNombre();
-            fila[2] = producto.getPrecioActual();
-            fila[3] = contador;
-            fila[4] = producto.getPrecioActual() * contador;//Esto va en otro paquete
-            modelo.addRow(fila);
-        } else if(carrito.contains(producto)){
-            //Si el producto ya existe en el carrito, solo se incrementa la cantidad y se actualiza
-            fila[3] = contador++;
-            fila[4] = producto.getPrecioActual() * contador;//Esto va en otro paquete
-            modelo.addRow(fila);
+        if (producto.getStock() > 0) {
             
-        }else{
-            //Aqui lanza un error
-            //JOptionPane.showMessageDialog(this, fila, "Error", ERROR);
-        }   
-    }
+            //Se añade producto al carrito por primera vez
+            Object[] fila = new Object[5];
+            
+            if (carrito.contains(producto) == false) {
+                carrito.add(producto);
+                fila[0] = producto.getId();
+                fila[1] = producto.getNombre();
+                fila[2] = producto.getPrecioActual();
+                fila[3] = 1;
+                fila[4] = producto.getPrecioActual();
+                modeloCarrito.addRow(fila);
+                
+                //Si ya hay un producto igual en el carrito
+            } else if (carrito.contains(producto)) {
+                
+                //Se obtiene la cantidad de producto que ya hay en el carrito.
+                int cantidad = (Integer) modeloCarrito.getValueAt(carrito.indexOf(producto), 3);
+                
+                //Validacion del stock
+                if ((cantidad + 1) <= producto.getStock()) {
+                    
+                    //Se modifican las celdas de cantidad y monto total
+                    modeloCarrito.setValueAt((cantidad + 1), carrito.indexOf(producto), 3);
+                    modeloCarrito.setValueAt(producto.getPrecioActual() * cantidad, carrito.indexOf(producto), 4);
+                }
+            }
+            
+            //Actualizar las celdas de stock de productos, sin modificar la base de datos hasta que se guarde.
+            int cantidad = (Integer) tbProductos.getValueAt(mostrador.indexOf(producto), 3);
+            tbProductos.setValueAt((cantidad-1), mostrador.indexOf(producto), 3);
+            
+            
+            }
+            
+            
+        }
     
     public void guardar(){
+        
         Cliente cliente = (Cliente)cbCliente.getSelectedItem();
-        Venta venta = new Venta(new GregorianCalendar(), cliente, Float.parseFloat(txtDescuento.getText()), 
-                Float.parseFloat(txtTotal.getText()));
+        Venta venta = new Venta(new GregorianCalendar(), cliente, Float.parseFloat(txtDescuento.getText()),Float.parseFloat(txtTotal.getText()));
+        
+        List<rel_productosventas> productoVentas = new ArrayList<>();
+        
+        //Relacion entre productos y ventas
+        for (Producto producto : carrito) {
+            
+            //Actualizar la base de datos de los productos
+            producto.setStock(((Integer)(modeloCarrito.getValueAt(carrito.indexOf(producto), 3))));
+            productoRepository.actualizar(producto);
+            
+            productoVentas.add(new rel_productosventas(producto, venta, producto.getPrecioActual(), ((Integer)(modeloCarrito.getValueAt(carrito.indexOf(producto), 4)))
+                    , ((Integer)(modeloCarrito.getValueAt(carrito.indexOf(producto), 3)))));
+        }
+        
+        //Guardar la venta en la base de datos
+        venta.setProductos(productoVentas);
         ventaRepository.guardar(venta);
+        
+        
+        
+    }
+    
+    public void agregarClientes(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        ArrayList<Cliente> clientes = clienteRepository.buscarTodas();
+        for (Cliente cliente: clientes) {
+            modelo.addElement(clientes);
+            
+        }
+        cbCliente.setModel(modelo);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

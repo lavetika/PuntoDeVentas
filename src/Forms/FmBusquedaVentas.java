@@ -65,8 +65,8 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1228, 550));
-        setPreferredSize(new java.awt.Dimension(1228, 550));
+        setMinimumSize(new java.awt.Dimension(1228, 590));
+        setPreferredSize(new java.awt.Dimension(1228, 590));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbCliente.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -174,13 +174,14 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         txtCliente.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, 310, 30));
 
+        btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMenuActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 30, -1, -1));
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 30, -1, -1));
 
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 540, 90));
@@ -207,7 +208,8 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         Menu menu = new Menu ();
-        menu.show();        
+        menu.show();
+        setVisible(false);        
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**

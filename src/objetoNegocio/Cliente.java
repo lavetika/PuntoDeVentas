@@ -136,7 +136,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "objetoNegocio.Cliente[ id=" + id + " ]";
+        return id + " - " + rfc + " - " + nombre;
     }
     
 }

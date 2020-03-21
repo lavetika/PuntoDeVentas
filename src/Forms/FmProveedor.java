@@ -38,14 +38,14 @@ public class FmProveedor extends javax.swing.JFrame {
 //        this.setSize(530,666);
         this.cargarTabla();
         //Imagen de fondo
-        try {
-            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
-            JPanel panel = (JPanel) this.getContentPane();
-            panel.setBorder(fondo);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        };
-        
+//        try {
+//            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
+//            JPanel panel = (JPanel) this.getContentPane();
+//            panel.setBorder(fondo);
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        };
+//        
         txtID.setEnabled(false);
     }
 
@@ -177,6 +177,7 @@ public class FmProveedor extends javax.swing.JFrame {
         });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 110, 30));
 
+        btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,22 +203,28 @@ public class FmProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.exit(0);
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int indiceFila = tbProveedores.getSelectedRow();
-        if(indiceFila == -1){
-            JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
-        }else{
-            Long proveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);
-            proveedorRepository.eliminar(proveedor);
-            limpiar();
-            cargarTabla();
-        }
+        eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tbProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProveedoresMouseClicked
+        mostrarInfo();
+        btnGuardar.setText("Editar");
+    }//GEN-LAST:event_tbProveedoresMouseClicked
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu();
+        menu.show();
+        setVisible(false);
+    }//GEN-LAST:event_btnMenuActionPerformed
+    private void guardar(){
         if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             txtNombre.setEnabled(true);
             txtRFC.setEnabled(true);
@@ -260,18 +267,19 @@ public class FmProveedor extends javax.swing.JFrame {
             txtDireccion.setBorder(border);
         }
         this.cargarTabla();
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void tbProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProveedoresMouseClicked
-        mostrarInfo();
-        btnGuardar.setText("Editar");
-    }//GEN-LAST:event_tbProveedoresMouseClicked
-
-    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        Menu menu = new Menu();
-        menu.show();
-    }//GEN-LAST:event_btnMenuActionPerformed
-
+    }
+    
+    private void eliminar(){
+        int indiceFila = tbProveedores.getSelectedRow();
+        if(indiceFila == -1){
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Long proveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);
+            proveedorRepository.eliminar(proveedor);
+            limpiar();
+            cargarTabla();
+        }
+    }
      private void mostrarInfo(){
         int indiceFila = tbProveedores.getSelectedRow();
         Long idProveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);

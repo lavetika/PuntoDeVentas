@@ -19,7 +19,7 @@ public class Operaciones {
         return subtotal;
     }
     
-    public float montoFinal(float total, float descuento){
+    public float montoFinal(Float total, Float descuento){
          return (total - (total*(descuento/100)));
     }
 }
