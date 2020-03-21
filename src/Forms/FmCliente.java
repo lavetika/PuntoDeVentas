@@ -1,29 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Forms;
 
+import imagenes.ImagenFondo;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import objetoNegocio.Cliente;
+import repositories.ClienteRepository;
+
 
 /**
  *
  * @author Estefanía Aguilar
  */
 public class FmCliente extends javax.swing.JFrame {
-
+    ClienteRepository clienteRepository;
     /**
      * Creates new form FmCliente
      */
-    public FmCliente() {
+    public FmCliente(JFrame padre) {
         initComponents();
         this.setTitle("Cliente");
         this.setLocationRelativeTo(null);
+        this.clienteRepository = new ClienteRepository();
         //Imagen de fondo
         try {
             ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
@@ -33,8 +39,7 @@ public class FmCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        txtID.setEditable(false);
-        
+        txtID.setEditable(false);   
     }
 
     /**
@@ -56,17 +61,18 @@ public class FmCliente extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
         txtTelefonoM = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbClientes = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txtRFC = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(655, 665));
@@ -111,11 +117,7 @@ public class FmCliente extends javax.swing.JFrame {
         txtTelefonoM.setText("OPCIONAL");
         getContentPane().add(txtTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 230, 30));
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
-        jLabel1.setText("REGISTRO DE CLIENTE");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -126,7 +128,7 @@ public class FmCliente extends javax.swing.JFrame {
                 "ID", "RFC", "NOMBRE", "DIRECCION", "TELEFONO MOVIL", "TELEFONO FIJO"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tbClientes);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 580, 170));
 
@@ -137,17 +139,16 @@ public class FmCliente extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 120, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 120, 30));
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 120, 30));
-
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 620, 210));
-
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 620, 50));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 120, 30));
 
         txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 230, 30));
@@ -157,69 +158,163 @@ public class FmCliente extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         jButton1.setText("Eliminar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 120, 30));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 120, 30));
+
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, -1));
 
         jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 620, 320));
+
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 620, 210));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 620, 50));
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE CLIENTE");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FmCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FmCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FmCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FmCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FmCliente().setVisible(true);
-            }
-        });
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        eliminar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu();
+        menu.show();
+    }//GEN-LAST:event_btnMenuActionPerformed
+
+    public void guardar(){
+        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
+            btnGuardar.setText("Actualizar");
+            txtNombre.setEnabled(true);
+            txtRFC.setEnabled(true);
+            txtDireccion.setEnabled(true);
+            txtTelefonoF.setEnabled(true);
+            txtTelefonoM.setEnabled(true);
+            
+        }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && 
+                !txtNombre.getText().isEmpty() && !txtRFC.getText().isEmpty() && !txtDireccion.getText().isEmpty()){
+            
+            //Se actualiza en la base de datos
+            clienteRepository.actualizar(new Cliente(Long.parseLong(txtID.getText()), txtNombre.getText(), 
+                    txtRFC.getText(), txtDireccion.getText(), txtTelefonoF.getText(), txtTelefonoM.getText()));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtRFC.setBorder(txtID.getBorder());
+            txtDireccion.setBorder(txtID.getBorder());
+            
+        //Validar que todos los campos esten llenos    
+        }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtRFC.getText().isEmpty() &&
+                !txtDireccion.getText().isEmpty()){
+            
+            //Guardar en la base de datos
+            clienteRepository.guardar(new Cliente(txtNombre.getText(), txtRFC.getText(), txtDireccion.getText(), 
+                    txtTelefonoF.getText(), txtTelefonoM.getText())); 
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtRFC.setBorder(txtID.getBorder());
+            txtDireccion.setBorder(txtID.getBorder());
+            
+        }else{
+            //Todos los campos son obligatorios
+            LineBorder border = new LineBorder(Color.red);
+            txtNombre.setBorder(border);
+            txtRFC.setBorder(txtID.getBorder());
+            txtDireccion.setBorder(txtID.getBorder());
+        }
+
+        cargarTabla();
+    }
+    
+    public void eliminar(){
+        int indiceFila = tbClientes.getSelectedRow();
+        if(indiceFila == -1){
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un cliente", "Información", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Long proveedor = (Long)tbClientes.getValueAt(indiceFila, 0);
+            clienteRepository.eliminar(proveedor);
+            limpiar();
+            cargarTabla();
+        }
+    }
+    
+    public void cancelar(){
+        System.exit(0);
+    }
+    
+       private void limpiar(){
+        txtID.setText("");
+        txtNombre.setText("");;
+        txtRFC.setText("");
+        txtDireccion.setText("");
+        txtTelefonoF.setText("");
+        txtTelefonoM.setText("");
+        txtNombre.setEnabled(true);
+        txtRFC.setEnabled(true);
+        txtDireccion.setEditable(true);
+        txtTelefonoF.setEditable(true);
+        txtTelefonoM.setEnabled(true);        
+        btnGuardar.setText("Guardar");
+    }
+    
+    private void cargarTabla(){
+        ArrayList<Cliente> clientes = clienteRepository.buscarTodas();        
+        DefaultTableModel modelo = (DefaultTableModel)tbClientes.getModel();        
+        modelo.setRowCount(0);
+        for (Cliente cliente: clientes) {
+            Object[] fila = new Object[6];
+            fila[0] = cliente.getId();
+            fila[1] = cliente.getNombre();
+            fila[2] = cliente.getRfc();
+            fila[3] = cliente.getDireccion();
+            fila[4] = cliente.getTelefono1();
+            fila[5] = cliente.getTelefono2();
+            modelo.addRow(fila);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lbDireccion;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbRFC;
     private javax.swing.JLabel lbTelefonoF;
     private javax.swing.JLabel lbTelefonoM;
     private javax.swing.JLabel lblID;
+    private javax.swing.JTable tbClientes;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;

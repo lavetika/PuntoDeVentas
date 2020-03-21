@@ -1,11 +1,13 @@
 
 package Forms;
 
+import imagenes.ImagenFondo;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -25,7 +27,7 @@ public class FmCategoria extends javax.swing.JFrame {
     /**
      * Creates new form FmCategoria
      */
-    public FmCategoria() {
+    public FmCategoria(JFrame padre) {
         initComponents();
         this.setTitle("Categoría");
         this.setLocationRelativeTo(null);
@@ -62,33 +64,35 @@ public class FmCategoria extends javax.swing.JFrame {
         tbCategorias = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(638, 527));
+        setMinimumSize(new java.awt.Dimension(638, 580));
+        setPreferredSize(new java.awt.Dimension(638, 580));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblID.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lblID.setText("ID");
-        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
         lbNombre.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbNombre.setText("NOMBRE");
-        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         lbDescripcion.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbDescripcion.setText("DESCRIPCIÓN");
-        getContentPane().add(lbDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        getContentPane().add(lbDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         txtID.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 230, 30));
+        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 230, 30));
 
         txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 230, 30));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 230, 30));
 
         lbRegistroCategorias.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
         lbRegistroCategorias.setText("REGISTRO DE CATEGORIAS");
@@ -112,7 +116,7 @@ public class FmCategoria extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbCategorias);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 560, 170));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 560, 170));
 
         btnCancelar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -121,7 +125,7 @@ public class FmCategoria extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 110, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 110, 30));
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -130,16 +134,10 @@ public class FmCategoria extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 110, 30));
-
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 600, 210));
-
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 50));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 110, 30));
 
         txtDescripcion.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 230, 30));
+        getContentPane().add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 230, 30));
 
         btnEliminar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -148,10 +146,24 @@ public class FmCategoria extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, 110, 30));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 110, 30));
+
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, -1));
 
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 600, 180));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 600, 250));
+
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 600, 210));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -163,7 +175,7 @@ public class FmCategoria extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int indiceFila = tbCategorias.getSelectedRow();
         if(indiceFila == -1){
-            JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una categoría", "Información", JOptionPane.ERROR_MESSAGE);
         }else{
             Long proveedor = (Long)tbCategorias.getValueAt(indiceFila, 0);
             categoriaReposity.eliminar(proveedor);
@@ -216,6 +228,11 @@ public class FmCategoria extends javax.swing.JFrame {
         btnGuardar.setText("Editar");
     }//GEN-LAST:event_tbCategoriasMouseClicked
 
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu();
+        menu.show();
+    }//GEN-LAST:event_btnMenuActionPerformed
+
     private void limpiar(){
         txtID.setText("");
         txtNombre.setText("");;
@@ -251,42 +268,12 @@ public class FmCategoria extends javax.swing.JFrame {
             txtNombre.setEnabled(false);
             txtDescripcion.setEnabled(false);
     }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FmCategoria().setVisible(true);
-            }
-        });
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

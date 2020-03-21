@@ -16,6 +16,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        this.setTitle("Menu");
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,49 +30,154 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        btnCliente = new javax.swing.JButton();
+        btnProveedor = new javax.swing.JButton();
+        btnCategoria = new javax.swing.JButton();
+        btnProducto = new javax.swing.JButton();
+        btnBusquedaVenta = new javax.swing.JButton();
+        btnRegistroVenta = new javax.swing.JButton();
+        lblEncabezado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnCliente.setText("Cliente");
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
+
+        btnProveedor.setText("Proveedor");
+        btnProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProveedorActionPerformed(evt);
+            }
+        });
+
+        btnCategoria.setText("Categoría");
+        btnCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaActionPerformed(evt);
+            }
+        });
+
+        btnProducto.setText("Producto");
+        btnProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductoActionPerformed(evt);
+            }
+        });
+
+        btnBusquedaVenta.setText("Buscar venta");
+        btnBusquedaVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusquedaVentaActionPerformed(evt);
+            }
+        });
+
+        btnRegistroVenta.setText("Registrar venta");
+        btnRegistroVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistroVentaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBusquedaVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegistroVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                .addGap(84, 84, 84))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 123, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(btnCliente)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProveedor)
+                    .addComponent(btnBusquedaVenta))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCategoria))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(btnRegistroVenta)))
+                .addGap(14, 14, 14)
+                .addComponent(btnProducto)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 48)); // NOI18N
-        jLabel1.setText("PUNTO DE VENTAS");
+        lblEncabezado.setFont(new java.awt.Font("Eras Bold ITC", 1, 48)); // NOI18N
+        lblEncabezado.setText("SUPER-DIANA'S");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(160, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(148, 148, 148))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(63, Short.MAX_VALUE)
+                .addComponent(lblEncabezado)
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jLabel1)
-                .addGap(156, 156, 156)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(lblEncabezado)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBusquedaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaVentaActionPerformed
+        FmBusquedaVentas fmBusquedaVentas = new FmBusquedaVentas(this);
+        fmBusquedaVentas.show();               
+    }//GEN-LAST:event_btnBusquedaVentaActionPerformed
+
+    private void btnRegistroVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroVentaActionPerformed
+        FmRegistroVentas fmRegistroVentas = new FmRegistroVentas(this);
+        fmRegistroVentas.show();
+    }//GEN-LAST:event_btnRegistroVentaActionPerformed
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        FmCliente fmCliente = new FmCliente(this);
+        fmCliente.show();
+        
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
+        FmProveedor fmProveedor = new FmProveedor(this);
+        fmProveedor.show();
+    }//GEN-LAST:event_btnProveedorActionPerformed
+
+    private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
+        FmCategoria fmCategoria = new FmCategoria(this);
+        fmCategoria.show();
+    }//GEN-LAST:event_btnCategoriaActionPerformed
+
+    private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
+        FmProducto fmProducto = new FmProducto(this);
+        fmProducto.show();
+    }//GEN-LAST:event_btnProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,7 +215,13 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnBusquedaVenta;
+    private javax.swing.JButton btnCategoria;
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnProducto;
+    private javax.swing.JButton btnProveedor;
+    private javax.swing.JButton btnRegistroVenta;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblEncabezado;
     // End of variables declaration//GEN-END:variables
 }

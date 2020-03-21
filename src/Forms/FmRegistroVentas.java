@@ -5,25 +5,43 @@
  */
 package Forms;
 
+import imagenes.ImagenFondo;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import objetoNegocio.Cliente;
+import objetoNegocio.Producto;
+import objetoNegocio.Venta;
+import repositories.ProductoRepository;
+import repositories.VentaRepository;
 
 /**
  *
  * @author Estefanía Aguilar
  */
 public class FmRegistroVentas extends javax.swing.JFrame {
-
+    VentaRepository ventaRepository;
+    ProductoRepository productoRepository;
+    List<Producto> carrito;
+    DefaultTableModel modelo;
     /**
      * Creates new form FmVenta
      */
-    public FmRegistroVentas() {
+    public FmRegistroVentas(JFrame padre) {
         initComponents();
         this.setTitle("Registro de venta");
         this.setLocationRelativeTo(null);
+        this.ventaRepository = new VentaRepository();
+        this.carrito = new ArrayList<>();
+        this.productoRepository = new ProductoRepository();
+        DefaultTableModel modelo = new DefaultTableModel();
         //Imagen de fondo
         try {
             ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
@@ -32,6 +50,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        cargarTablaProductos();
     }
 
     /**
@@ -43,30 +62,33 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
         lbCliente = new javax.swing.JLabel();
         lbSubtotal = new javax.swing.JLabel();
         lbDescuento = new javax.swing.JLabel();
         lbTotal = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbCarrito = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         txtDescuento = new javax.swing.JTextField();
         txtSubtotal = new javax.swing.JTextField();
         cbCliente = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         lbBuscador = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tbProductos = new javax.swing.JTable();
         lbBuscador1 = new javax.swing.JLabel();
         txtBuscador = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         lbProductos = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+
+        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1270, 598));
@@ -92,11 +114,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         txtTotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 270, 30));
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
-        jLabel1.setText("REGISTRO DE VENTAS");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 250, -1));
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -107,7 +125,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 "ID", "NOMBRE", "PRECIO ACTUAL", "CANTIDAD", "MONTO TOTAL"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tbCarrito);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, 710, 170));
 
@@ -118,7 +136,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 450, 180, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 180, 30));
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Registrar");
@@ -128,7 +146,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 200, 30));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 200, 30));
 
         txtDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 270, 30));
@@ -139,14 +157,11 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 270, 30));
 
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 750, 250));
-
         lbBuscador.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbBuscador.setText("BUSCADOR DE PRODUCTOS");
         getContentPane().add(lbBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, 30));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -157,7 +172,12 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 "ID", "NOMBRE", "Precio Actual", "Stock"
             }
         ));
-        jScrollPane4.setViewportView(jTable3);
+        tbProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbProductosMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tbProductos);
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 710, 170));
 
@@ -166,19 +186,36 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         getContentPane().add(lbBuscador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, -1));
         getContentPane().add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 290, 30));
 
-        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 470, 430));
+        btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 30, 100, 30));
+
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, -1, -1));
+
+        lbProductos.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbProductos.setText("CARRITO DE COMPRAS");
+        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE VENTAS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 250, -1));
+
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 750, 250));
 
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 470, 90));
-
-        btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        btnBuscar.setText("Buscar");
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 30, 100, 30));
-
-        lbProductos.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbProductos.setText("PRODUCTOS SELECCIONADOS");
-        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, -1, -1));
 
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 750, 270));
@@ -187,53 +224,87 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FmRegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FmRegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FmRegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FmRegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FmRegistroVentas().setVisible(true);
-            }
-        });
+        cargarTablaCarrito();
+    }//GEN-LAST:event_tbProductosMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu ();
+        menu.show();
+    }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void cargarTablaProductos(){
+        ArrayList<Producto> productos = productoRepository.buscarTodas();        
+        DefaultTableModel modelo1 = (DefaultTableModel)tbProductos.getModel();        
+        modelo1.setRowCount(0);
+        for (Producto producto: productos) {
+            Object[] fila = new Object[4];
+            fila[0] = producto.getId();
+            fila[1] = producto.getNombre();
+            fila[2] = producto.getPrecioActual();
+            fila[3] = producto.getStock();
+            modelo1.addRow(fila);
+        }
+    }
+    
+    private void cargarTablaCarrito(){
+        int contador = 0;
+        
+        //Obtego el producto seleccionado de la tabla
+        int indiceFila = tbProductos.getSelectedRow();
+        Long idProducto = (Long)tbProductos.getValueAt(indiceFila, 0);
+        Producto producto = productoRepository.buscarPorId(idProducto);
+        
+        //Se añade producto al carrito
+        modelo = (DefaultTableModel) tbCarrito.getModel();
+        modelo.setRowCount(0);
+        Object[] fila = new Object[5];
+        
+        if (carrito.contains(producto) == false) {
+            contador++;
+            carrito.add(producto);
+            fila[0] = producto.getId();
+            fila[1] = producto.getNombre();
+            fila[2] = producto.getPrecioActual();
+            fila[3] = contador;
+            fila[4] = producto.getPrecioActual() * contador;//Esto va en otro paquete
+            modelo.addRow(fila);
+        } else if(carrito.contains(producto)){
+            //Si el producto ya existe en el carrito, solo se incrementa la cantidad y se actualiza
+            fila[3] = contador++;
+            fila[4] = producto.getPrecioActual() * contador;//Esto va en otro paquete
+            modelo.addRow(fila);
+            
+        }else{
+            //Aqui lanza un error
+            //JOptionPane.showMessageDialog(this, fila, "Error", ERROR);
+        }   
+    }
+    
+    public void guardar(){
+        Cliente cliente = (Cliente)cbCliente.getSelectedItem();
+        Venta venta = new Venta(new GregorianCalendar(), cliente, Float.parseFloat(txtDescuento.getText()), 
+                Float.parseFloat(txtTotal.getText()));
+        ventaRepository.guardar(venta);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JComboBox<String> cbCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -242,8 +313,6 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lbBuscador;
     private javax.swing.JLabel lbBuscador1;
     private javax.swing.JLabel lbCliente;
@@ -251,6 +320,8 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     private javax.swing.JLabel lbProductos;
     private javax.swing.JLabel lbSubtotal;
     private javax.swing.JLabel lbTotal;
+    private javax.swing.JTable tbCarrito;
+    private javax.swing.JTable tbProductos;
     private javax.swing.JTextField txtBuscador;
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtSubtotal;

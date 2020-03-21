@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import imagenes.ImagenFondo;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -36,7 +38,7 @@ public class FmProducto extends javax.swing.JFrame {
     /**
      * Creates new form FmProducto
      */
-    public FmProducto() {
+    public FmProducto(JFrame padre) {
         initComponents();
         this.setTitle("Producto");
         this.setLocationRelativeTo(null);
@@ -91,10 +93,11 @@ public class FmProducto extends javax.swing.JFrame {
         tbProductos = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        btnEliminar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -194,7 +197,7 @@ public class FmProducto extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 110, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 110, 30));
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -203,13 +206,7 @@ public class FmProducto extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 110, 30));
-
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 580, 210));
-
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 50));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 110, 30));
 
         btnEliminar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -218,10 +215,24 @@ public class FmProducto extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 110, 30));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 320, 110, 30));
+
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, -1, -1));
 
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 580, 320));
+
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 580, 210));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -297,6 +308,11 @@ public class FmProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu ();
+        menu.show();
+    }//GEN-LAST:event_btnMenuActionPerformed
+
     public void agregarProveedores(){
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         ArrayList<Proveedor> proveedores = proveedorRepository.buscarTodas();
@@ -363,43 +379,12 @@ public class FmProducto extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
     }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FmProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FmProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FmProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FmProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FmProducto().setVisible(true);
-            }
-        });
-    }
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbProveedor;
     private javax.swing.JLabel jLabel1;

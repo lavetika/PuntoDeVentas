@@ -5,11 +5,13 @@
  */
 package Forms;
 
+import imagenes.ImagenFondo;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -28,7 +30,7 @@ public class FmProveedor extends javax.swing.JFrame {
     /**
      * Creates new form FmProveedor
      */
-    public FmProveedor() {
+    public FmProveedor(JFrame padre) {
         initComponents();
         this.setTitle("Proveedor");
         this.setLocationRelativeTo(null);
@@ -66,17 +68,18 @@ public class FmProveedor extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbProveedores = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txtRFC = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(608, 660));
@@ -121,10 +124,6 @@ public class FmProveedor extends javax.swing.JFrame {
         txtTelefono.setText("OPCIONAL");
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 230, 30));
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
-        jLabel1.setText("REGISTRO DE PROVEEDORES");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
-
         tbProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -152,7 +151,7 @@ public class FmProveedor extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 110, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, 110, 30));
 
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -161,13 +160,7 @@ public class FmProveedor extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 110, 30));
-
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 580, 210));
-
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 50));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 110, 30));
 
         txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 230, 30));
@@ -182,10 +175,28 @@ public class FmProveedor extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, 110, 30));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 110, 30));
+
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, -1, -1));
 
         jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 580, 320));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 50));
+
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 580, 210));
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE PROVEEDORES");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -256,6 +267,11 @@ public class FmProveedor extends javax.swing.JFrame {
         btnGuardar.setText("Editar");
     }//GEN-LAST:event_tbProveedoresMouseClicked
 
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        Menu menu = new Menu();
+        menu.show();
+    }//GEN-LAST:event_btnMenuActionPerformed
+
      private void mostrarInfo(){
         int indiceFila = tbProveedores.getSelectedRow();
         Long idProveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);
@@ -305,42 +321,12 @@ public class FmProveedor extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
     }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FmProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FmProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FmProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FmProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FmProveedor().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

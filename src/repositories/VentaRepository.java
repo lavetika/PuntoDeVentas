@@ -23,32 +23,15 @@ public class VentaRepository extends BaseRepository<Venta>{
         entityManager.persist(venta);
         entityManager.getTransaction().commit();
     }
-
-    @Override
+    
+       @Override
     public void eliminar(long id) {
-        EntityManager entityManager = this.createEntityManager();
-        entityManager.getTransaction().begin();
-        Venta venta = entityManager.find(Venta.class, id);
-        if (venta != null){
-            entityManager.remove(venta);
-        }
-        entityManager.getTransaction().commit();
+        throw new UnsupportedOperationException("No es posible eliminar una venta"); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void actualizar(Venta ventaActualizada) {
-        EntityManager entityManager = this.createEntityManager();
-        entityManager.getTransaction().begin();
-        Venta ventaGuardada = entityManager.find(Venta.class, ventaActualizada.getId());
-        if(ventaGuardada != null){
-            ventaGuardada.setCliente(ventaActualizada.getCliente());
-            ventaGuardada.setDescuento(ventaActualizada.getDescuento());
-            ventaGuardada.setFecha(ventaActualizada.getFecha());
-            ventaGuardada.setMontoFinal(ventaActualizada.getMontoFinal());
-            ventaActualizada.setProductos(ventaActualizada.getProductos());
-            entityManager.merge(ventaGuardada);
-        }
-        entityManager.getTransaction().commit();
+    public void actualizar(Venta entidad) {
+        throw new UnsupportedOperationException("No es posible actualizar una venta."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -71,5 +54,7 @@ public class VentaRepository extends BaseRepository<Venta>{
         entityManager.getTransaction().commit();
         return new ArrayList<>(ventas);        
     }
+
+ 
     
 }
