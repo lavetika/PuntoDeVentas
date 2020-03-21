@@ -2,8 +2,10 @@
 package objetoNegocio;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,7 +30,7 @@ public class Venta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
-    private Calendar fecha;
+    private Date fecha;
     private Cliente cliente;
     private Float descuento, montoFinal;
     private List<rel_productosventas> productos;
@@ -37,7 +39,7 @@ public class Venta implements Serializable {
         this.productos = new ArrayList<>();
     }
 
-    public Venta(Calendar fecha, Cliente cliente, Float descuento, Float montoFinal) {
+    public Venta(Date fecha, Cliente cliente, Float descuento, Float montoFinal) {
         this();
         this.fecha = fecha;
         this.cliente = cliente;
@@ -45,7 +47,7 @@ public class Venta implements Serializable {
         this.montoFinal = montoFinal;
     }
 
-    public Venta(Long id, Calendar fecha, Cliente cliente, Float descuento, Float montoFinal) {
+    public Venta(Long id, Date fecha, Cliente cliente, Float descuento, Float montoFinal) {
         this();
         this.id = id;
         this.fecha = fecha;
@@ -66,12 +68,12 @@ public class Venta implements Serializable {
     }
 
     @Column(name = "Fecha", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    public Calendar getFecha() {
+    //@Temporal(TemporalType.TIMESTAMP)
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Calendar fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

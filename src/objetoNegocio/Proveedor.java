@@ -2,6 +2,7 @@ package objetoNegocio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -112,6 +113,10 @@ public class Proveedor implements Serializable {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+    }
+    
+      public void addProductos(Producto... producto){
+        this.productos.addAll(Arrays.asList(producto));        
     }
     
     @Override

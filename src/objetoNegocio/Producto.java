@@ -3,6 +3,7 @@ package objetoNegocio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -121,6 +122,10 @@ public class Producto implements Serializable {
 
     public void setVentas(List<rel_productosventas> ventas) {
         this.ventas = ventas;
+    }
+    
+      public void addVentas(rel_productosventas... venta){
+        this.ventas.addAll(Arrays.asList(venta));        
     }
     
     @Override

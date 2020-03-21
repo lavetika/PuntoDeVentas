@@ -216,7 +216,7 @@ public class FmCategoria extends javax.swing.JFrame {
     private void eliminar(){
         int indiceFila = tbCategorias.getSelectedRow();
         if(indiceFila == -1){
-            JOptionPane.showMessageDialog(this, "Debes seleccionar una categoría", "Información", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una categoría", "Información", JOptionPane.WARNING_MESSAGE);
         }else{
             Long proveedor = (Long)tbCategorias.getValueAt(indiceFila, 0);
             categoriaReposity.eliminar(proveedor);
@@ -254,7 +254,8 @@ public class FmCategoria extends javax.swing.JFrame {
             
         }else{
             //Todos los campos son obligatorios
-            LineBorder border = new LineBorder(Color.red);
+            JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
+            LineBorder border = new LineBorder(Color.red);            
             txtNombre.setBorder(border);
             txtDescripcion.setBorder(border);
         }

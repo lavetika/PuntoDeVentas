@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import objetoNegocio.Producto;
 import objetoNegocio.Venta;
 
 /**
@@ -42,7 +43,15 @@ public class VentaRepository extends BaseRepository<Venta>{
         entityManager.getTransaction().commit();
         return venta;
     }
-
+    
+    public Venta buscarPorFecha(String fecha) {
+        EntityManager entityManager = this.createEntityManager();
+        entityManager.getTransaction().begin();
+        Venta venta = entityManager.find(Venta.class, fecha);
+        entityManager.getTransaction().commit();
+        return venta;
+    }
+    
     @Override
     public ArrayList<Venta> buscarTodas() {
         EntityManager entityManager = this.createEntityManager();
@@ -55,6 +64,14 @@ public class VentaRepository extends BaseRepository<Venta>{
         return new ArrayList<>(ventas);        
     }
 
- 
+    public Producto obtenerProducto(Long idProducto) {
+        EntityManager entityManager = this.createEntityManager();
+        entityManager.getTransaction().begin();
+        Producto producto = entityManager.find(Producto.class, idProducto);
+        entityManager.getTransaction().commit();
+        return producto;
+    }
+    
+    
     
 }

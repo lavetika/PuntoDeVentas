@@ -5,13 +5,34 @@
  */
 package Forms;
 
+import Operaciones.Operaciones;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import static javafx.scene.input.KeyCode.T;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import objetoNegocio.Cliente;
+import objetoNegocio.Producto;
+import objetoNegocio.Venta;
+import objetosServicio.Fecha;
+import objetosServicio.Periodo;
+import repositories.ClienteRepository;
+import repositories.ProductoRepository;
+import repositories.VentaRepository;
 
 /**
  *
  * @author Estefanía Aguilar
  */
 public class FmBusquedaVentas extends javax.swing.JFrame {
+    ClienteRepository clienteRepository;
+    ProductoRepository productoRepository;
+    VentaRepository ventaRepository;
+    Operaciones caja;
+    
+    Periodo periodoBusqueda;
 
     /**
      * Creates new form FmBusquedaVentas
@@ -20,11 +41,17 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Búsqueda de venta");
         this.setLocationRelativeTo(null);
+        this.clienteRepository = new ClienteRepository();
+        this.productoRepository = new ProductoRepository();
+        this.ventaRepository = new VentaRepository();
+        this.caja = new Operaciones();
         
         txtCliente.setEnabled(false);
         txtDescuento.setEnabled(false);
         txtSubtotal.setEnabled(false);
         txtTotal.setEnabled(false);
+        
+       agregarClientes();
     }
 
     /**
@@ -42,7 +69,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbProducto = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         txtFechaHasta = new javax.swing.JTextField();
         cbCliente = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -66,7 +93,6 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1228, 590));
-        setPreferredSize(new java.awt.Dimension(1228, 590));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbCliente.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -75,7 +101,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
 
         lbFecha.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbFecha.setText("FECHA");
-        getContentPane().add(lbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 180, -1));
+        getContentPane().add(lbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 90, -1));
 
         lbBuscadorVentas.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
         lbBuscadorVentas.setText("BUSCADOR DE VENTAS");
@@ -105,14 +131,14 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 220, 30));
 
-        btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        btnGuardar.setText("Buscar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, 30));
 
         txtFechaHasta.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtFechaHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 170, 30));
@@ -131,6 +157,11 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
                 "ID", "CLIENTE", "FECHA", "SUBTOTAL", "DESCUENTO", "TOTAL"
             }
         ));
+        TBVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TBVentasMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(TBVentas);
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 500, 180));
@@ -202,9 +233,9 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         Menu menu = new Menu ();
@@ -212,14 +243,66 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         setVisible(false);        
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    private void TBVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBVentasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TBVentasMouseClicked
+
+    private void mostrarInfo(){
+            int indiceFila = TBVentas.getSelectedRow();
+            Long idVentas = (Long)TBVentas.getValueAt(indiceFila, 0);
+            Venta venta = ventaRepository.buscarPorId(idVentas);
+            
+            txtCliente.setText(venta.getCliente().getNombre());
+            txtSubtotal.setText(String.valueOf(caja.descuentoInverso(venta.getMontoFinal(), venta.getDescuento())));
+            txtDescuento.setText(String.valueOf(venta.getDescuento()));
+            txtTotal.setText(String.valueOf(venta.getMontoFinal()));
+            
+    }
+    
+    public void buscar(){
+        Cliente cliente = (Cliente)cbCliente.getSelectedItem();
+        periodoBusqueda = new Periodo(new Fecha(txtFechaDe.getText()), new Fecha(txtFechaHasta.getText()));
+        List<Venta> ventas = new ArrayList<>();
+        ventas = ventaRepository.buscarTodas();
+        
+        for (Venta venta : ventas) {
+            Date fecha = venta.getFecha();
+            if (periodoBusqueda.contiene(new Fecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()))) {
+                
+                DefaultTableModel tablaVentas = (DefaultTableModel) TBVentas.getModel();
+                tablaVentas.setRowCount(0);
+                    Object[] fila = new Object[6];
+                    fila[0] = venta.getId();
+                    fila[1] = venta.getCliente().getId();
+                    fila[2] = venta.getFecha();                    
+                    fila[3] = caja.descuentoInverso(venta.getMontoFinal(), venta.getDescuento());
+                    fila[4] = "%" + venta.getDescuento();
+                    fila[5] = venta.getMontoFinal();
+                    tablaVentas.addRow(fila);
+            }
+                
+        }
+        
+    }
+    
+    public void agregarClientes(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        ArrayList<Cliente> clientes = clienteRepository.buscarTodas();
+        for (Cliente cliente: clientes) {
+            modelo.addElement(cliente);            
+        }
+        cbCliente.setModel(modelo);
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TBVentas;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JComboBox<String> cbCliente;
     private javax.swing.JLabel jLabel1;

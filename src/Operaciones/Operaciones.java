@@ -22,4 +22,8 @@ public class Operaciones {
     public float montoFinal(Float total, Float descuento){
          return (total - (total*(descuento/100)));
     }
+    
+    public float descuentoInverso(Float montoFinal, Float descuento){
+        return (montoFinal + (montoFinal*(descuento)/100));
+    }
 }

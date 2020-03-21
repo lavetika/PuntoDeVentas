@@ -3,6 +3,7 @@ package objetoNegocio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String rfc, nombre, direccion, telefono1, telefono2;
-    private List<Venta> ventas;
+    private List<Venta> ventas;    
 
     public Cliente() {
         this.ventas = new ArrayList<>();
@@ -112,6 +113,10 @@ public class Cliente implements Serializable {
 
     public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
+    }
+    
+      public void addVentas(Venta... venta){
+        this.ventas.addAll(Arrays.asList(venta));        
     }
     
     @Override

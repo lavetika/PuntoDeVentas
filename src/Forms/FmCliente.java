@@ -244,10 +244,11 @@ public class FmCliente extends javax.swing.JFrame {
             
         }else{
             //Todos los campos son obligatorios
+            JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
             LineBorder border = new LineBorder(Color.red);
             txtNombre.setBorder(border);
-            txtRFC.setBorder(txtID.getBorder());
-            txtDireccion.setBorder(txtID.getBorder());
+            txtRFC.setBorder(border);
+            txtDireccion.setBorder(border);
         }
 
         cargarTabla();
