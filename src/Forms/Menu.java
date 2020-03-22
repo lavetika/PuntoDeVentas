@@ -5,6 +5,9 @@
  */
 package Forms;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /**
  *
  * @author laura
@@ -40,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
+        setIconImage(getIconImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -184,6 +188,12 @@ public class Menu extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_btnProductoActionPerformed
 
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/home.png"));
+        return retValue;
+    }
+    
     /**
      * @param args the command line arguments
      */

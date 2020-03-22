@@ -7,6 +7,8 @@ package Forms;
 
 import imagenes.ImagenFondo;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -122,6 +124,7 @@ public class FmProducto extends javax.swing.JFrame {
         jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblID.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -149,6 +152,11 @@ public class FmProducto extends javax.swing.JFrame {
         getContentPane().add(lbPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
 
         txtPrecio.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 230, 30));
 
         txtID.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
@@ -158,6 +166,11 @@ public class FmProducto extends javax.swing.JFrame {
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 230, 30));
 
         txtStock.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 230, 30));
 
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -260,6 +273,18 @@ public class FmProducto extends javax.swing.JFrame {
         menu.show();
         setVisible(false);
     }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void txtStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 ]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtStockKeyTyped
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 .]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtPrecioKeyTyped
     
     private void eliminar(){
         int indiceFila = tbProductos.getSelectedRow();
@@ -393,6 +418,12 @@ public class FmProducto extends javax.swing.JFrame {
             fila[5] = producto.getPrecioActual();
             modelo.addRow(fila);
         }
+    }
+    
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/productos.png"));
+        return retValue;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

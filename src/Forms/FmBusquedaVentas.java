@@ -7,6 +7,8 @@ package Forms;
 
 import Operaciones.Operaciones;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -98,6 +100,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(1228, 590));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -147,6 +150,11 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, 30));
 
         txtFechaHasta.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtFechaHasta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFechaHastaKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtFechaHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 170, 30));
 
         cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -181,6 +189,11 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, -1, -1));
 
         txtFechaDe.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtFechaDe.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFechaDeKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtFechaDe, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 170, 30));
 
         lbCliente1.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -253,6 +266,18 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         mostrarInfo();
         
     }//GEN-LAST:event_TBVentasMouseClicked
+
+    private void txtFechaDeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaDeKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 /]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtFechaDeKeyTyped
+
+    private void txtFechaHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaHastaKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 /]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtFechaHastaKeyTyped
     
     private void cancelar() {
         DefaultTableModel tb = (DefaultTableModel) TBVentas.getModel();
@@ -306,6 +331,10 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
     
     public void buscar(){
         if(!txtFechaDe.getText().isEmpty() && !txtFechaHasta.getText().isEmpty()){
+            if(txtFechaDe.getText().matches("^([0-2][0-9]|3[0-1])(\\/|-)(0[1-9]|1[0-2])\\2(\\d{4})$") &&
+                    txtFechaHasta.getText().matches("^([0-2][0-9]|3[0-1])(\\/|-)(0[1-9]|1[0-2])\\2(\\d{4})$")){
+                //^[0-3]{1}[0-9]{1}/[0-1]{1}[1-2]{1}/[1-9]{1}[0-9]{3}$
+                //^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$
             Cliente cliente = (Cliente)cbCliente.getSelectedItem();
 
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
@@ -345,6 +374,8 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
                 tablaVentas.addRow(fila);
             }
         }
+        }
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. dd/mm/yyyy", "Alerta", JOptionPane.WARNING_MESSAGE);
         }else{
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
@@ -356,6 +387,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
                 txtFechaHasta.setBorder(border);
             }
         }
+    
         
     }
     
@@ -366,6 +398,12 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
             modelo.addElement(cliente);            
         }
         cbCliente.setModel(modelo);
+    }
+    
+     @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/etiquetaventa.png"));
+        return retValue;
     }
     
     

@@ -7,6 +7,8 @@ package Forms;
 
 import imagenes.ImagenFondo;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,6 +84,7 @@ public class FmProveedor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(608, 660));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -92,11 +95,11 @@ public class FmProveedor extends javax.swing.JFrame {
 
         lbNombre.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbNombre.setText("NOMBRE");
-        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
         lbRFC.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbRFC.setText("RFC");
-        getContentPane().add(lbRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        getContentPane().add(lbRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         lbDireccion.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbDireccion.setText("DIRECCIÓN");
@@ -119,12 +122,27 @@ public class FmProveedor extends javax.swing.JFrame {
         getContentPane().add(txtPaginaWeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 230, 30));
 
         txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 230, 30));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 230, 30));
 
         txtDireccion.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 230, 30));
 
         txtTelefono.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 230, 30));
 
         tbProveedores.setModel(new javax.swing.table.DefaultTableModel(
@@ -166,7 +184,12 @@ public class FmProveedor extends javax.swing.JFrame {
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 110, 30));
 
         txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 230, 30));
+        txtRFC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRFCKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 230, 30));
 
         txtID.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 230, 30));
@@ -231,7 +254,33 @@ public class FmProveedor extends javax.swing.JFrame {
     private void txtPaginaWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPaginaWebActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPaginaWebActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtRFCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRFCKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtRFCKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 -]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
     private void guardar(){
+        //Expresion regular pagina web: ^http[s]?:\/\/[\w]+([\.]+[\w]+)+$
+        //Validar direccion url: ^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)( [a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$
         if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             txtNombre.setEnabled(true);
             txtRFC.setEnabled(true);
@@ -341,6 +390,12 @@ public class FmProveedor extends javax.swing.JFrame {
             fila[5] = proveedor.getPaginaWeb();
             modelo.addRow(fila);
         }
+    }
+    
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/usuario.png"));
+        return retValue;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

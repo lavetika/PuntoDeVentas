@@ -219,6 +219,12 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         lbBuscador1.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbBuscador1.setText("BUSCADOR DE PRODUCTOS");
         getContentPane().add(lbBuscador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, -1));
+
+        txtBuscador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscadorKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtBuscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 290, 30));
 
         btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
@@ -371,12 +377,20 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_tbCarritoMouseClicked
 
     private void txtDescuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescuentoKeyTyped
-
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 ]$")) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtDescuentoKeyTyped
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtBuscadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscadorKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 ]$")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtBuscadorKeyTyped
     private void actualizarSubtotal(){
         //Actualizar precios
         List<Float> montosTotales = new ArrayList<>();

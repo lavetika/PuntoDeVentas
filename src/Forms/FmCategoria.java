@@ -3,6 +3,8 @@ package Forms;
 
 import imagenes.ImagenFondo;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,8 +74,8 @@ public class FmCategoria extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(638, 580));
-        setPreferredSize(new java.awt.Dimension(638, 580));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblID.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -92,6 +94,11 @@ public class FmCategoria extends javax.swing.JFrame {
         getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 230, 30));
 
         txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 230, 30));
 
         lbRegistroCategorias.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
@@ -137,6 +144,11 @@ public class FmCategoria extends javax.swing.JFrame {
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 110, 30));
 
         txtDescripcion.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 230, 30));
 
         btnEliminar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
@@ -191,6 +203,18 @@ public class FmCategoria extends javax.swing.JFrame {
         menu.show();
         setVisible(false);
     }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void limpiar(){
         txtID.setText("");
@@ -278,6 +302,12 @@ public class FmCategoria extends javax.swing.JFrame {
             txtID.setEnabled(false);
             txtNombre.setEnabled(false);
             txtDescripcion.setEnabled(false);
+    }
+    
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/categoriaa.png"));
+        return retValue;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

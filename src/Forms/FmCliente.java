@@ -3,6 +3,8 @@ package Forms;
 
 import imagenes.ImagenFondo;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,14 +61,14 @@ public class FmCliente extends javax.swing.JFrame {
         lbTelefonoF = new javax.swing.JLabel();
         lbTelefonoM = new javax.swing.JLabel();
         txtTelefonoF = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
+        txtRFC = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
         txtTelefonoM = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbClientes = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        txtRFC = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
@@ -76,6 +78,7 @@ public class FmCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(655, 665));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -109,18 +112,38 @@ public class FmCliente extends javax.swing.JFrame {
                 txtTelefonoFActionPerformed(evt);
             }
         });
+        txtTelefonoF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoFKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 230, 30));
 
-        txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 230, 30));
+        txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtRFC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRFCKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 230, 30));
 
         txtDireccion.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 230, 30));
 
         txtTelefonoM.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         txtTelefonoM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefonoMActionPerformed(evt);
+            }
+        });
+        txtTelefonoM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoMKeyTyped(evt);
             }
         });
         getContentPane().add(txtTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 230, 30));
@@ -158,8 +181,13 @@ public class FmCliente extends javax.swing.JFrame {
         });
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 120, 30));
 
-        txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 230, 30));
+        txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 230, 30));
 
         txtID.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 230, 30));
@@ -224,50 +252,86 @@ public class FmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoMActionPerformed
 
+    private void txtTelefonoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoMKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 -]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtTelefonoMKeyTyped
+
+    private void txtTelefonoFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoFKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[0-9 -]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtTelefonoFKeyTyped
+
+    private void txtRFCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRFCKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtRFCKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+//        Expresión regular minimo 1 nombre y 1 apellido
+//        if (!String.valueOf(evt.getKeyChar()).matches("^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?"
+//                + "[A-Za-zÁÉÍÓÚñáéíóúÑ\\']+[\\s])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\\'])"
+//                + "+[\\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\\'])?$")){
+//            evt.consume();            
+//        }
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z ñáéíóú]$")){ 
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z ñáéíóú]$")){ 
+            evt.consume();            
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
     public void guardar(){
         if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             btnGuardar.setText("Actualizar");
-            txtNombre.setEnabled(true);
             txtRFC.setEnabled(true);
+            txtNombre.setEnabled(true);
             txtDireccion.setEnabled(true);
             txtTelefonoF.setEnabled(true);
             txtTelefonoM.setEnabled(true);
             
         }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && 
-                !txtNombre.getText().isEmpty() && !txtRFC.getText().isEmpty() && !txtDireccion.getText().isEmpty()){
+                !txtRFC.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtDireccion.getText().isEmpty()){
             
             //Se actualiza en la base de datos
-            clienteRepository.actualizar(new Cliente(Long.parseLong(txtID.getText()), txtNombre.getText(), 
-                    txtRFC.getText(), txtDireccion.getText(), txtTelefonoF.getText(), txtTelefonoM.getText()));
+            clienteRepository.actualizar(new Cliente(Long.parseLong(txtID.getText()), txtRFC.getText(), 
+                    txtNombre.getText(), txtDireccion.getText(), txtTelefonoF.getText(), txtTelefonoM.getText()));
             limpiar();
             
-            txtNombre.setBorder(txtID.getBorder());
             txtRFC.setBorder(txtID.getBorder());
+            txtNombre.setBorder(txtID.getBorder());
             txtDireccion.setBorder(txtID.getBorder());
             
         //Validar que todos los campos esten llenos    
-        }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtRFC.getText().isEmpty() &&
+        }else if(txtID.getText().isEmpty() && !txtRFC.getText().isEmpty() && !txtNombre.getText().isEmpty() &&
                 !txtDireccion.getText().isEmpty()){
             
             //Guardar en la base de datos
-            clienteRepository.guardar(new Cliente(txtNombre.getText(), txtRFC.getText(), txtDireccion.getText(), 
+            clienteRepository.guardar(new Cliente(txtRFC.getText(), txtNombre.getText(), txtDireccion.getText(), 
                     txtTelefonoF.getText(), txtTelefonoM.getText())); 
             limpiar();
             
-            txtNombre.setBorder(txtID.getBorder());
             txtRFC.setBorder(txtID.getBorder());
+            txtNombre.setBorder(txtID.getBorder());
             txtDireccion.setBorder(txtID.getBorder());
             
         }else{
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
             LineBorder border = new LineBorder(Color.red);
-            if (txtNombre.getText().isEmpty()) {
-                txtNombre.setBorder(border);
+            if (txtRFC.getText().isEmpty()) {
+                txtRFC.setBorder(border);
             } else if (txtDireccion.getText().isEmpty()) {
                 txtDireccion.setBorder(border);
             } else {
-                txtRFC.setBorder(border);
+                txtNombre.setBorder(border);
             }
         }
 
@@ -289,13 +353,13 @@ public class FmCliente extends javax.swing.JFrame {
     
        private void limpiar(){
         txtID.setText("");
-        txtNombre.setText("");;
-        txtRFC.setText("");
+        txtRFC.setText("");;
+        txtNombre.setText("");
         txtDireccion.setText("");
         txtTelefonoF.setText("");
         txtTelefonoM.setText("");
-        txtNombre.setEnabled(true);
         txtRFC.setEnabled(true);
+        txtNombre.setEnabled(true);
         txtDireccion.setEditable(true);
         txtTelefonoF.setEditable(true);
         txtTelefonoM.setEnabled(true);        
@@ -316,6 +380,12 @@ public class FmCliente extends javax.swing.JFrame {
             fila[5] = cliente.getTelefono1();
             modelo.addRow(fila);
         }
+    }
+    
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/usuario.png"));
+        return retValue;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
