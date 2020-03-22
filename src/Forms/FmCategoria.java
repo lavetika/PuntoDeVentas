@@ -72,6 +72,7 @@ public class FmCategoria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        lblBlanco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -103,7 +104,7 @@ public class FmCategoria extends javax.swing.JFrame {
 
         lbRegistroCategorias.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
         lbRegistroCategorias.setText("REGISTRO DE CATEGORIAS");
-        getContentPane().add(lbRegistroCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
+        getContentPane().add(lbRegistroCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         tbCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,6 +135,7 @@ public class FmCategoria extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 110, 30));
 
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 51));
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,14 +171,21 @@ public class FmCategoria extends javax.swing.JFrame {
         });
         getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, -1));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 600, 250));
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 600, 210));
 
+        jLabel5.setBackground(new java.awt.Color(255, 102, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/unnamed.jpg"))); // NOI18N
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 50));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 510, 50));
+
+        lblBlanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancosolido.jpg"))); // NOI18N
+        getContentPane().add(lblBlanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -322,6 +331,7 @@ public class FmCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel lbDescripcion;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbRegistroCategorias;
+    private javax.swing.JLabel lblBlanco;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tbCategorias;
     private javax.swing.JTextField txtDescripcion;

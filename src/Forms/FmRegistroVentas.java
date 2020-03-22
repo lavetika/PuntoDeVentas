@@ -93,13 +93,16 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         txtBuscador = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        lblCarritoicono = new javax.swing.JLabel();
         lbProductos = new javax.swing.JLabel();
+        lblRegistroicono = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnGuardar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -155,7 +158,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 190, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 150, 40));
 
         btnDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnDescuento.setText("Aplicar");
@@ -244,25 +247,9 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 btnMenuActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, -1, -1));
+        getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, -1, -1));
 
-        lbProductos.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbProductos.setText("CARRITO DE COMPRAS");
-        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, -1, -1));
-
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
-        jLabel1.setText("REGISTRO DE VENTAS");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 250, -1));
-
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 750, 250));
-
-        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 470, 90));
-
-        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 750, 270));
-
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 51));
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Registrar");
         btnGuardar.setToolTipText("");
@@ -271,10 +258,42 @@ public class FmRegistroVentas extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 200, 30));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 150, 40));
 
+        lblCarritoicono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fast-clipart-shopping-cart-4_opt.png"))); // NOI18N
+        getContentPane().add(lblCarritoicono, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, -1, -1));
+
+        lbProductos.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        lbProductos.setText("CARRITO DE COMPRAS");
+        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, -1, -1));
+
+        lblRegistroicono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/caja_opt.png"))); // NOI18N
+        getContentPane().add(lblRegistroicono, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE VENTAS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 250, -1));
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 750, 250));
+
+        jLabel5.setBackground(new java.awt.Color(255, 102, 0));
+        jLabel5.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/unnamed.jpg"))); // NOI18N
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 470, 90));
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 750, 270));
+
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 470, 430));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancosolido.jpg"))); // NOI18N
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 2150, 1090));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -545,6 +564,7 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lbBuscador;
@@ -554,6 +574,8 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     private javax.swing.JLabel lbProductos;
     private javax.swing.JLabel lbSubtotal;
     private javax.swing.JLabel lbTotal;
+    private javax.swing.JLabel lblCarritoicono;
+    private javax.swing.JLabel lblRegistroicono;
     private javax.swing.JTable tbCarrito;
     private javax.swing.JTable tbProductos;
     private javax.swing.JTextField txtBuscador;

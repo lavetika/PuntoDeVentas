@@ -78,10 +78,11 @@ public class FmProveedor extends javax.swing.JFrame {
         txtID = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblBlanco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -174,6 +175,7 @@ public class FmProveedor extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, 110, 30));
 
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 51));
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +203,7 @@ public class FmProveedor extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 110, 30));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 300, 110, 30));
 
         btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
@@ -212,18 +214,25 @@ public class FmProveedor extends javax.swing.JFrame {
         });
         getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE PROVEEDORES");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 580, 320));
 
+        jLabel5.setBackground(new java.awt.Color(255, 102, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/unnamed.jpg"))); // NOI18N
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 50));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 510, 50));
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 580, 210));
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
-        jLabel1.setText("REGISTRO DE PROVEEDORES");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        lblBlanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancosolido.jpg"))); // NOI18N
+        getContentPane().add(lblBlanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -413,6 +422,7 @@ public class FmProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel lbPaginaWeb;
     private javax.swing.JLabel lbRFC;
     private javax.swing.JLabel lbTelefono;
+    private javax.swing.JLabel lblBlanco;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tbProveedores;
     private javax.swing.JTextField txtDireccion;

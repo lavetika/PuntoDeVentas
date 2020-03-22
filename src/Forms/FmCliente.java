@@ -71,11 +71,12 @@ public class FmCliente extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         btnMenu = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblBlanco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -172,6 +173,7 @@ public class FmCliente extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 120, 30));
 
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 51));
         btnGuardar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -201,6 +203,10 @@ public class FmCliente extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 120, 30));
 
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
+        jLabel1.setText("REGISTRO DE CLIENTE");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
+
         btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -210,18 +216,21 @@ public class FmCliente extends javax.swing.JFrame {
         });
         getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, -1));
 
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 620, 320));
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 620, 210));
 
+        jLabel5.setBackground(new java.awt.Color(255, 102, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/unnamed.jpg"))); // NOI18N
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 620, 50));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 50));
 
-        jLabel1.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
-        jLabel1.setText("REGISTRO DE CLIENTE");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        lblBlanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancosolido.jpg"))); // NOI18N
+        getContentPane().add(lblBlanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -403,6 +412,7 @@ public class FmCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lbRFC;
     private javax.swing.JLabel lbTelefonoF;
     private javax.swing.JLabel lbTelefonoM;
+    private javax.swing.JLabel lblBlanco;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tbClientes;
     private javax.swing.JTextField txtDireccion;

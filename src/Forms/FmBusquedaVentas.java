@@ -94,10 +94,14 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         txtSubtotal = new javax.swing.JTextField();
         txtCliente = new javax.swing.JTextField();
         btnMenu = new javax.swing.JButton();
+        lblDetalle = new javax.swing.JLabel();
+        lblLupa = new javax.swing.JLabel();
+        lblCarritoIcono = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lblBlanco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -106,15 +110,15 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
 
         lbCliente.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbCliente.setText("CLIENTE");
-        getContentPane().add(lbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 110, -1));
+        getContentPane().add(lbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 100, -1));
 
         lbFecha.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbFecha.setText("FECHA");
-        getContentPane().add(lbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 90, -1));
+        getContentPane().add(lbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 90, -1));
 
         lbBuscadorVentas.setFont(new java.awt.Font("Calibri Light", 3, 24)); // NOI18N
         lbBuscadorVentas.setText("BUSCADOR DE VENTAS");
-        getContentPane().add(lbBuscadorVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 250, -1));
+        getContentPane().add(lbBuscadorVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 250, -1));
 
         tbProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,7 +133,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tbProducto);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 580, 180));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 580, 180));
 
         btnCancelar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -138,7 +142,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 220, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, 150, 40));
 
         btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -147,7 +151,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 220, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 150, 40));
 
         txtFechaHasta.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         txtFechaHasta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -155,7 +159,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
                 txtFechaHastaKeyTyped(evt);
             }
         });
-        getContentPane().add(txtFechaHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 170, 30));
+        getContentPane().add(txtFechaHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 170, 30));
 
         cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 380, 30));
@@ -182,11 +186,11 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
 
         lbDetalleVenta.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbDetalleVenta.setText("DETALLES DE VENTA");
-        getContentPane().add(lbDetalleVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, -1));
+        getContentPane().add(lbDetalleVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, 40));
 
         lbProductos.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbProductos.setText("PRODUCTOS ");
-        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, -1, -1));
+        getContentPane().add(lbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 300, -1, -1));
 
         txtFechaDe.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         txtFechaDe.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -233,17 +237,34 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
         });
         getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 30, -1, -1));
 
+        lblDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/detalle_opt.png"))); // NOI18N
+        getContentPane().add(lblDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 30, 30));
+
+        lblLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscarcliente_opt.png"))); // NOI18N
+        getContentPane().add(lblLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
+
+        lblCarritoIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos_opt.png"))); // NOI18N
+        getContentPane().add(lblCarritoIcono, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 290, 40, 40));
+
+        jLabel5.setBackground(new java.awt.Color(255, 102, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/unnamed.jpg"))); // NOI18N
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 540, 90));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, 90));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 540, 420));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 520, 420));
 
+        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
         jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 640, 260));
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 640, 250));
+
+        lblBlanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blancosolido.jpg"))); // NOI18N
+        getContentPane().add(lblBlanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1210, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -432,6 +453,10 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
     private javax.swing.JLabel lbProductos;
     private javax.swing.JLabel lbSubtotal;
     private javax.swing.JLabel lbTotal;
+    private javax.swing.JLabel lblBlanco;
+    private javax.swing.JLabel lblCarritoIcono;
+    private javax.swing.JLabel lblDetalle;
+    private javax.swing.JLabel lblLupa;
     private javax.swing.JTable tbProducto;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtDescuento;
