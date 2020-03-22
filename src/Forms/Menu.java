@@ -150,33 +150,38 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnBusquedaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaVentaActionPerformed
         FmBusquedaVentas fmBusquedaVentas = new FmBusquedaVentas(this);
-        fmBusquedaVentas.show();               
+        fmBusquedaVentas.show();   
+        setVisible(false);
     }//GEN-LAST:event_btnBusquedaVentaActionPerformed
 
     private void btnRegistroVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroVentaActionPerformed
         FmRegistroVentas fmRegistroVentas = new FmRegistroVentas(this);
         fmRegistroVentas.show();
+        setVisible(false);
     }//GEN-LAST:event_btnRegistroVentaActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         FmCliente fmCliente = new FmCliente(this);
         fmCliente.show();
-        
+        setVisible(false);
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         FmProveedor fmProveedor = new FmProveedor(this);
         fmProveedor.show();
+        setVisible(false);
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
         FmCategoria fmCategoria = new FmCategoria(this);
         fmCategoria.show();
+        setVisible(false);
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         FmProducto fmProducto = new FmProducto(this);
         fmProducto.show();
+        setVisible(false);
     }//GEN-LAST:event_btnProductoActionPerformed
 
     /**

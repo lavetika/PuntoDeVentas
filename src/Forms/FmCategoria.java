@@ -251,17 +251,19 @@ public class FmCategoria extends javax.swing.JFrame {
             
             txtNombre.setBorder(txtID.getBorder());
             txtDescripcion.setBorder(txtID.getBorder());
-            
+        
+        //If anidado para indicar los campos obligatorios que faltan por llenarse.
         }else{
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
-            LineBorder border = new LineBorder(Color.red);            
-            txtNombre.setBorder(border);
-            txtDescripcion.setBorder(border);
+            
+            LineBorder border = new LineBorder(Color.red);   
+            if(txtNombre.getText().isEmpty()){
+                txtNombre.setBorder(border);
+            }else{
+                txtDescripcion.setBorder(border);
+            }
         }
-        
-        
-        
         cargarTabla();
     }
     private void mostrarInfo(){

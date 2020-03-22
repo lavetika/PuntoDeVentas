@@ -111,7 +111,11 @@ public class FmProveedor extends javax.swing.JFrame {
         getContentPane().add(lbPaginaWeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
 
         txtPaginaWeb.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        txtPaginaWeb.setText("OPCIONAL");
+        txtPaginaWeb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPaginaWebActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtPaginaWeb, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 230, 30));
 
         txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
@@ -121,7 +125,6 @@ public class FmProveedor extends javax.swing.JFrame {
         getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 230, 30));
 
         txtTelefono.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        txtTelefono.setText("OPCIONAL");
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 230, 30));
 
         tbProveedores.setModel(new javax.swing.table.DefaultTableModel(
@@ -224,6 +227,10 @@ public class FmProveedor extends javax.swing.JFrame {
         menu.show();
         setVisible(false);
     }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void txtPaginaWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPaginaWebActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPaginaWebActionPerformed
     private void guardar(){
         if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             txtNombre.setEnabled(true);
@@ -263,9 +270,14 @@ public class FmProveedor extends javax.swing.JFrame {
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
             LineBorder border = new LineBorder(Color.red);
-            txtNombre.setBorder(border);
-            txtRFC.setBorder(border);
-            txtDireccion.setBorder(border);
+            if (txtNombre.getText().isEmpty()) {
+                txtNombre.setBorder(border);
+            } else if (txtDireccion.getText().isEmpty()) {
+                txtDireccion.setBorder(border);
+            } else {
+                txtRFC.setBorder(border);
+            }
+            
         }
         this.cargarTabla();
     }

@@ -6,16 +6,22 @@
 package Forms;
 
 import Operaciones.Operaciones;
+import java.awt.Color;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import static javafx.scene.input.KeyCode.T;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import objetoNegocio.Cliente;
 import objetoNegocio.Producto;
 import objetoNegocio.Venta;
+import objetoNegocio.rel_productosventas;
 import objetosServicio.Fecha;
 import objetosServicio.Periodo;
 import repositories.ClienteRepository;
@@ -179,31 +185,31 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
 
         lbCliente1.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbCliente1.setText("CLIENTE");
-        getContentPane().add(lbCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 110, -1));
+        getContentPane().add(lbCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 130, -1));
 
         lbSubtotal.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbSubtotal.setText("SUBTOTAL");
-        getContentPane().add(lbSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 130, -1));
+        lbSubtotal.setText("SUBTOTAL        $");
+        getContentPane().add(lbSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 180, -1));
 
         lbDescuento.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbDescuento.setText("DESCUENTO");
-        getContentPane().add(lbDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 150, -1));
+        lbDescuento.setText("DESCUENTO    %");
+        getContentPane().add(lbDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 180, -1));
 
         lbTotal.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbTotal.setText("TOTAL");
-        getContentPane().add(lbTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 90, -1));
+        lbTotal.setText("TOTAL               $");
+        getContentPane().add(lbTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 180, -1));
 
         txtTotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 310, 30));
+        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 280, 30));
 
         txtDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 170, 310, 30));
+        getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 280, 30));
 
         txtSubtotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 310, 30));
+        getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, 280, 30));
 
         txtCliente.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, 310, 30));
+        getContentPane().add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, 280, 30));
 
         btnMenu.setBackground(new java.awt.Color(255, 255, 255));
         btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casita.jpg"))); // NOI18N
@@ -230,11 +236,11 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
@@ -244,43 +250,111 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void TBVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TBVentasMouseClicked
-        // TODO add your handling code here:
+        mostrarInfo();
+        
     }//GEN-LAST:event_TBVentasMouseClicked
+    
+    private void cancelar() {
+        DefaultTableModel tb = (DefaultTableModel) TBVentas.getModel();
+        int a = TBVentas.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            tb.removeRow(tb.getRowCount() - 1);
+        }
+        
+        DefaultTableModel modeloProducto = (DefaultTableModel) tbProducto.getModel();
+        int b = tbProducto.getRowCount() - 1;
+        for (int i = b; i >= 0; i--) {          
+        modeloProducto.removeRow(modeloProducto.getRowCount()-1);
+        }
+        
+        txtFechaDe.setText("");
+        txtFechaHasta.setText("");
+        txtCliente.setText("");
+        txtDescuento.setText("");
+        txtSubtotal.setText("");
+        txtTotal.setText("");
+    }
+    private void mostrarInfo() {
 
-    private void mostrarInfo(){
-            int indiceFila = TBVentas.getSelectedRow();
-            Long idVentas = (Long)TBVentas.getValueAt(indiceFila, 0);
-            Venta venta = ventaRepository.buscarPorId(idVentas);
+        //Se muestra la informacion en los campos de textos.
+        int indiceFila = TBVentas.getSelectedRow();
+        Long idVentas = (Long) TBVentas.getValueAt(indiceFila, 0);
+        Venta venta = ventaRepository.buscarPorId(idVentas);
+        
+        txtCliente.setText(venta.getCliente().getNombre());
+        txtSubtotal.setText(String.valueOf(caja.descuentoInverso(venta.getMontoFinal(), venta.getDescuento())));
+        txtDescuento.setText(String.valueOf(venta.getDescuento()));
+        txtTotal.setText(String.valueOf(venta.getMontoFinal()));
+
+        //Se muestra la informacion de la venta
+        
+        DefaultTableModel tablaProductosVenta = (DefaultTableModel) tbProducto.getModel();
+        tablaProductosVenta.setRowCount(0);
+        Object[] fila = new Object[5];
+        
+        for (rel_productosventas productoVenta : venta.getProductos()) {
             
-            txtCliente.setText(venta.getCliente().getNombre());
-            txtSubtotal.setText(String.valueOf(caja.descuentoInverso(venta.getMontoFinal(), venta.getDescuento())));
-            txtDescuento.setText(String.valueOf(venta.getDescuento()));
-            txtTotal.setText(String.valueOf(venta.getMontoFinal()));
+            fila[0] = productoVenta.getProducto().getId();
+            fila[1] = productoVenta.getProducto().getNombre();
+            fila[2] = productoVenta.getPrecio();
+            fila[3] = productoVenta.getCantidad();
+            fila[4] = productoVenta.getMontoFinal();
             
+            tablaProductosVenta.addRow(fila);
+        }
     }
     
     public void buscar(){
-        Cliente cliente = (Cliente)cbCliente.getSelectedItem();
-        periodoBusqueda = new Periodo(new Fecha(txtFechaDe.getText()), new Fecha(txtFechaHasta.getText()));
+        if(!txtFechaDe.getText().isEmpty() && !txtFechaHasta.getText().isEmpty()){
+            Cliente cliente = (Cliente)cbCliente.getSelectedItem();
+
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaD, fechaH;
+        
+        try {
+            fechaD = new java.sql.Date(formater.parse(txtFechaDe.getText()).getTime());
+            fechaH = new java.sql.Date(formater.parse(txtFechaHasta.getText()).getTime());
+
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Fecha incorrecta", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        periodoBusqueda = new Periodo(new Fecha(fechaD.getDay(), fechaD.getMonth(), fechaD.getYear()), 
+                new Fecha(fechaH.getDay(), fechaH.getMonth(), fechaH.getYear()));
+
         List<Venta> ventas = new ArrayList<>();
+        
         ventas = ventaRepository.buscarTodas();
+        DefaultTableModel tablaVentas = (DefaultTableModel) TBVentas.getModel();
+        tablaVentas.setRowCount(0);
+        Object[] fila = new Object[6];
         
         for (Venta venta : ventas) {
+
             Date fecha = venta.getFecha();
-            if (periodoBusqueda.contiene(new Fecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()))) {
-                
-                DefaultTableModel tablaVentas = (DefaultTableModel) TBVentas.getModel();
-                tablaVentas.setRowCount(0);
-                    Object[] fila = new Object[6];
-                    fila[0] = venta.getId();
-                    fila[1] = venta.getCliente().getId();
-                    fila[2] = venta.getFecha();                    
-                    fila[3] = caja.descuentoInverso(venta.getMontoFinal(), venta.getDescuento());
-                    fila[4] = "%" + venta.getDescuento();
-                    fila[5] = venta.getMontoFinal();
-                    tablaVentas.addRow(fila);
+            if (periodoBusqueda.contiene(new Fecha(fecha.getDay(), fecha.getMonth(), fecha.getYear()))
+                    && venta.getCliente().getId().equals(cliente.getId())) {
+
+                fila[0] = venta.getId();
+                fila[1] = venta.getCliente().getId();
+                fila[2] = venta.getFecha();
+                fila[3] = caja.descuentoInverso(venta.getMontoFinal(), venta.getDescuento());
+                fila[4] = "%" + venta.getDescuento();
+                fila[5] = venta.getMontoFinal();
+                tablaVentas.addRow(fila);
             }
-                
+        }
+        }else{
+            //Todos los campos son obligatorios
+            JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
+            LineBorder border = new LineBorder(Color.red);
+            if (txtFechaDe.getText().isEmpty()) {
+                txtFechaDe.setBorder(border);
+            } 
+            if (txtFechaHasta.getText().isEmpty()) {
+                txtFechaHasta.setBorder(border);
+            }
         }
         
     }

@@ -321,6 +321,8 @@ public class FmProducto extends javax.swing.JFrame {
         txtNombre.setEnabled(true);
         txtPrecio.setEnabled(true);
         txtStock.setEnabled(true);
+        cbCategoria.setEnabled(true);
+        cbProveedor.setEnabled(true);
         btnGuardar.setText("Guardar");
     }    
     private void guardar(){
@@ -366,9 +368,13 @@ public class FmProducto extends javax.swing.JFrame {
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
             LineBorder border = new LineBorder(Color.red);
-            txtNombre.setBorder(border);
-            txtPrecio.setBorder(border);
-            txtStock.setBorder(border);
+            if(txtNombre.getText().isEmpty()){
+                txtNombre.setBorder(border);
+            }else if(txtPrecio.getText().isEmpty()){
+                txtPrecio.setBorder(border);
+            }else{
+                txtStock.setBorder(border);
+            } 
         }
         cargarTabla();
         

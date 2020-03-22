@@ -40,6 +40,7 @@ public class FmCliente extends javax.swing.JFrame {
 //        }
         
         txtID.setEnabled(false);   
+        cargarTabla();
     }
 
     /**
@@ -76,46 +77,53 @@ public class FmCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(655, 665));
-        setPreferredSize(new java.awt.Dimension(655, 665));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblID.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lblID.setText("ID");
-        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         lbNombre.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbNombre.setText("NOMBRE");
-        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        getContentPane().add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
         lbRFC.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbRFC.setText("RFC");
-        getContentPane().add(lbRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+        getContentPane().add(lbRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         lbDireccion.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbDireccion.setText("DIRECCIÓN");
-        getContentPane().add(lbDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
+        getContentPane().add(lbDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
         lbTelefonoF.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbTelefonoF.setText("TELEFONO FIJO");
-        getContentPane().add(lbTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
+        getContentPane().add(lbTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         lbTelefonoM.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbTelefonoM.setText("TELEFONO MOVIL");
-        getContentPane().add(lbTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+        getContentPane().add(lbTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
 
         txtTelefonoF.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        txtTelefonoF.setText("OPCIONAL");
-        getContentPane().add(txtTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 230, 30));
+        txtTelefonoF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoFActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtTelefonoF, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 230, 30));
 
         txtNombre.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 230, 30));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 230, 30));
 
         txtDireccion.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 230, 30));
+        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 230, 30));
 
         txtTelefonoM.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        txtTelefonoM.setText("OPCIONAL");
-        getContentPane().add(txtTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 230, 30));
+        txtTelefonoM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoMActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtTelefonoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 230, 30));
 
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,10 +159,10 @@ public class FmCliente extends javax.swing.JFrame {
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 120, 30));
 
         txtRFC.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 230, 30));
+        getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 230, 30));
 
         txtID.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 230, 30));
+        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 230, 30));
 
         jButton1.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         jButton1.setText("Eliminar");
@@ -208,6 +216,14 @@ public class FmCliente extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    private void txtTelefonoFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoFActionPerformed
+
+    private void txtTelefonoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoMActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoMActionPerformed
+
     public void guardar(){
         if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             btnGuardar.setText("Actualizar");
@@ -246,9 +262,13 @@ public class FmCliente extends javax.swing.JFrame {
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
             LineBorder border = new LineBorder(Color.red);
-            txtNombre.setBorder(border);
-            txtRFC.setBorder(border);
-            txtDireccion.setBorder(border);
+            if (txtNombre.getText().isEmpty()) {
+                txtNombre.setBorder(border);
+            } else if (txtDireccion.getText().isEmpty()) {
+                txtDireccion.setBorder(border);
+            } else {
+                txtRFC.setBorder(border);
+            }
         }
 
         cargarTabla();
@@ -292,8 +312,8 @@ public class FmCliente extends javax.swing.JFrame {
             fila[1] = cliente.getNombre();
             fila[2] = cliente.getRfc();
             fila[3] = cliente.getDireccion();
-            fila[4] = cliente.getTelefono1();
-            fila[5] = cliente.getTelefono2();
+            fila[4] = cliente.getTelefono2();
+            fila[5] = cliente.getTelefono1();
             modelo.addRow(fila);
         }
     }
