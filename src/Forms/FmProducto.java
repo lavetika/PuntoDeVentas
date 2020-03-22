@@ -422,7 +422,7 @@ public class FmProducto extends javax.swing.JFrame {
     
     @Override
     public Image getIconImage(){
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/productos.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/productofeliz.png"));
         return retValue;
     }
     

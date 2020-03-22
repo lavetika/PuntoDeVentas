@@ -394,7 +394,7 @@ public class FmProveedor extends javax.swing.JFrame {
     
     @Override
     public Image getIconImage(){
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/usuario.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/proveedor.png"));
         return retValue;
     }
 
