@@ -160,7 +160,15 @@ public class FmCliente extends javax.swing.JFrame {
             new String [] {
                 "ID", "RFC", "NOMBRE", "DIRECCION", "TELEFONO MOVIL", "TELEFONO FIJO"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbClientesMouseClicked(evt);
@@ -298,9 +306,6 @@ public class FmCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
-        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z ñáéíóú]$")){ 
-            evt.consume();            
-        }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void tbClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientesMouseClicked

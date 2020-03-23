@@ -130,7 +130,15 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
             new String [] {
                 "ID", "PRODUCTO", "PRECIO ACTUAL", "CANTIDAD", "MONTO TOTAL"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tbProducto);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 580, 180));
@@ -174,7 +182,15 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
             new String [] {
                 "ID", "CLIENTE", "FECHA", "SUBTOTAL", "DESCUENTO", "TOTAL"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         TBVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TBVentasMouseClicked(evt);

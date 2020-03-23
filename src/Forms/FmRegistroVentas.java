@@ -141,7 +141,15 @@ public class FmRegistroVentas extends javax.swing.JFrame {
             new String [] {
                 "ID", "NOMBRE", "PRECIO ACTUAL", "CANTIDAD", "MONTO TOTAL"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbCarrito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbCarritoMouseClicked(evt);
@@ -209,7 +217,15 @@ public class FmRegistroVentas extends javax.swing.JFrame {
             new String [] {
                 "ID", "NOMBRE", "Precio Actual", "Stock"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbProductosMouseClicked(evt);

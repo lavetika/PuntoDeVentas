@@ -157,7 +157,15 @@ public class FmProveedor extends javax.swing.JFrame {
             new String [] {
                 "ID", "RFC", "NOMBRE", "DIRECCION", "TELEFONO", "PAGINA WEB"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbProveedoresMouseClicked(evt);
@@ -278,9 +286,6 @@ public class FmProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRFCKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
-        if (!String.valueOf(evt.getKeyChar()).matches("^[a-zA-Z]$")){            
-            evt.consume();            
-        }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
@@ -448,7 +453,8 @@ public class FmProveedor extends javax.swing.JFrame {
     
     private void cargarTabla(){
         ArrayList<Proveedor> proveedores = proveedorRepository.buscarTodas();        
-        DefaultTableModel modelo = (DefaultTableModel)tbProveedores.getModel();        
+        DefaultTableModel modelo = (DefaultTableModel)tbProveedores.getModel();
+                
         modelo.setRowCount(0);
         for (Proveedor proveedor: proveedores) {
             Object[] fila = new Object[8];
@@ -460,7 +466,7 @@ public class FmProveedor extends javax.swing.JFrame {
             fila[5] = proveedor.getPaginaWeb();
             modelo.addRow(fila);
         }
-    }
+    }   
     
     @Override
     public Image getIconImage(){

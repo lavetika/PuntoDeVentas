@@ -118,7 +118,15 @@ public class FmCategoria extends javax.swing.JFrame {
             new String [] {
                 "ID", "NOMBRE", "DESCRICION"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbCategoriasMouseClicked(evt);
