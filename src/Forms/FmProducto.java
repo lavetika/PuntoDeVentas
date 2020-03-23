@@ -299,8 +299,9 @@ public class FmProducto extends javax.swing.JFrame {
         int indiceFila = tbProductos.getSelectedRow();
         if(indiceFila == -1){
             JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
-        }else{
+        }else {
             Long idProducto = (Long)tbProductos.getValueAt(indiceFila, 0);
+            
             productoRepository.eliminar(idProducto);
             limpiar();
             cargarTabla();

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import objetoNegocio.Categoria;
 import objetoNegocio.Producto;
 import objetoNegocio.Proveedor;
+import repositories.ProductoRepository;
 import repositories.ProveedorRepository;
 
 /**
@@ -29,14 +30,14 @@ import repositories.ProveedorRepository;
  */
 public class FmProveedor extends javax.swing.JFrame {
     ProveedorRepository proveedorRepository;
-    /**
-     * Creates new form FmProveedor
-     */
+    ProductoRepository productoRepository;
+    
     public FmProveedor(JFrame padre) {
         initComponents();
         this.setTitle("Proveedor");
         this.setLocationRelativeTo(null);
         this.proveedorRepository = new ProveedorRepository();
+        this.productoRepository = new ProductoRepository();
 //        this.setSize(530,666);
         this.cargarTabla();
         //Imagen de fondo
@@ -288,9 +289,12 @@ public class FmProveedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
     private void guardar(){
-        //Expresion regular pagina web: ^http[s]?:\/\/[\w]+([\.]+[\w]+)+$
-        //Validar direccion url: ^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)( [a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$
-        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
+        //Accion para reemplazar a la categoria eliminada que tenia producto
+        if (btnGuardar.getBackground() == Color.red) {
+            reemplazarProveedor();
+            btnGuardar.setBackground(Color.getHSBColor(0, 102, 51));
+            
+        }else if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             txtNombre.setEnabled(true);
             txtRFC.setEnabled(true);
             txtDireccion.setEnabled(true);
@@ -303,13 +307,7 @@ public class FmProveedor extends javax.swing.JFrame {
                 !txtDireccion.getText().isEmpty()){
             
             //Se actualiza en la base de datos
-            proveedorRepository.actualizar(new Proveedor(Long.parseLong(txtID.getText()), txtRFC.getText(), txtNombre.getText(), txtDireccion.getText(), 
-                    txtTelefono.getText(), txtPaginaWeb.getText()));
-            limpiar();
-            
-            txtNombre.setBorder(txtID.getBorder());
-            txtRFC.setBorder(txtID.getBorder());
-            txtDireccion.setBorder(txtID.getBorder());
+            actualizar();
             
         //Validar que todos los campos esten llenos    
         }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtRFC.getText().isEmpty() && 
@@ -340,17 +338,80 @@ public class FmProveedor extends javax.swing.JFrame {
         this.cargarTabla();
     }
     
+    private void actualizar(){
+        proveedorRepository.actualizar(new Proveedor(Long.parseLong(txtID.getText()), txtRFC.getText(), txtNombre.getText(), txtDireccion.getText(), 
+                    txtTelefono.getText(), txtPaginaWeb.getText()));
+            limpiar();
+            
+            txtNombre.setBorder(txtID.getBorder());
+            txtRFC.setBorder(txtID.getBorder());
+            txtDireccion.setBorder(txtID.getBorder());
+            
+    }
+    private void reemplazarProveedor() {
+
+        //Se valida que todos los campos esten llenos para guardar
+        if (txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtRFC.getText().isEmpty()
+                && !txtDireccion.getText().isEmpty()) {
+
+            //Actualizar en la base de datos
+            actualizar();
+            txtID.setEnabled(false);
+        } else {
+            
+            //Todos los campos son obligatorios
+            JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
+            LineBorder border = new LineBorder(Color.red);
+            if (txtNombre.getText().isEmpty()) {
+                txtNombre.setBorder(border);
+            } else if (txtDireccion.getText().isEmpty()) {
+                txtDireccion.setBorder(border);
+            } else {
+                txtRFC.setBorder(border);
+            }
+
+        }
+
+    }
+    
     private void eliminar(){
         int indiceFila = tbProveedores.getSelectedRow();
         if(indiceFila == -1){
-            JOptionPane.showMessageDialog(this, "Debes seleccionar una producto", "Información", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una proveedor", "Información", JOptionPane.ERROR_MESSAGE);
         }else{
-            Long proveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);
-            proveedorRepository.eliminar(proveedor);
+            //Se identifica el proveedor que se selecciono y que se desea eliminar.
+            Long idProveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);
+            
+            //Si el proveedor que se desea eliminar, tiene algun producto relacionado, tambien se eliminara
+            if (proveedorRepository.buscarPorId(idProveedor).getProductos().isEmpty() == false) {
+                JOptionPane.showMessageDialog(this, "Se ha eliminado el proveedor, pero tenia un producto relacionado, "
+                        + "agregue una nuevo proveedor para el producto.",
+                        "Informacion", JOptionPane.WARNING_MESSAGE);
+                
+                //Se prepara el frame para agregar una nueva categoria
+               //Se prepara el frame para agregar una nueva categoria
+                limpiar();
+                btnGuardar.setText("Guardar");
+                txtID.setEnabled(true);
+                txtID.setText(String.valueOf(idProveedor));
+                txtID.setForeground(Color.LIGHT_GRAY);
+                txtID.setBackground(Color.LIGHT_GRAY);
+                txtID.setEditable(false);
+                btnGuardar.setBackground(Color.red);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Se ha eliminado el proveedor", "Informacion", JOptionPane.WARNING_MESSAGE);
+                proveedorRepository.eliminar(idProveedor);
+                limpiar();
+            }
+
+            //Se elimina de la base de datos el proveedor
+            proveedorRepository.eliminar(idProveedor);
             limpiar();
             cargarTabla();
         }
     }
+    
      private void mostrarInfo(){
         int indiceFila = tbProveedores.getSelectedRow();
         Long idProveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);

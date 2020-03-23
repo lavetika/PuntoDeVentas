@@ -18,6 +18,8 @@ import objetoNegocio.Categoria;
 import objetoNegocio.Producto;
 import objetoNegocio.Proveedor;
 import repositories.CategoriaRepository;
+import repositories.ProductoRepository;
+import repositories.ProveedorRepository;
 
 /**
  *
@@ -25,15 +27,15 @@ import repositories.CategoriaRepository;
  */
 public class FmCategoria extends javax.swing.JFrame {
 
-    CategoriaRepository categoriaReposity;
-    /**
-     * Creates new form FmCategoria
-     */
+    CategoriaRepository categoriaRepositry;
+    ProductoRepository productoRepository;
+    
     public FmCategoria(JFrame padre) {
         initComponents();
         this.setTitle("Categoría");
         this.setLocationRelativeTo(null);
-        this.categoriaReposity = new CategoriaRepository();
+        this.categoriaRepositry = new CategoriaRepository();
+        this.productoRepository = new ProductoRepository();
         this.cargarTabla();
         //Imagen de fondo
 //        try {
@@ -235,7 +237,7 @@ public class FmCategoria extends javax.swing.JFrame {
     }
     
     private void cargarTabla(){
-        ArrayList<Categoria> categorias = categoriaReposity.buscarTodas();        
+        ArrayList<Categoria> categorias = categoriaRepositry.buscarTodas();        
         DefaultTableModel modelo = (DefaultTableModel)tbCategorias.getModel();        
         modelo.setRowCount(0);
         for (Categoria categoria: categorias) {
@@ -246,20 +248,82 @@ public class FmCategoria extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
     }
-    private void eliminar(){
+    
+    private void eliminar() {
         int indiceFila = tbCategorias.getSelectedRow();
-        if(indiceFila == -1){
+        if (indiceFila == -1) {
             JOptionPane.showMessageDialog(this, "Debes seleccionar una categoría", "Información", JOptionPane.WARNING_MESSAGE);
-        }else{
-            Long proveedor = (Long)tbCategorias.getValueAt(indiceFila, 0);
-            categoriaReposity.eliminar(proveedor);
-            limpiar();
+        } else {
+            //Se identifica la categoria que se selecciono y que se desea eliminar.
+            Long idCategoria = (Long) tbCategorias.getValueAt(indiceFila, 0);
+            
+            //Si la categoria que se desea eliminar tiene algun producto relacionado, se tendra que agregar una nueva categoria para el producto.
+            if (categoriaRepositry.buscarPorId(idCategoria).getProductos().isEmpty()==false) {
+                JOptionPane.showMessageDialog(this, "Se ha eliminado la categoria, pero tenia un producto relacionado, "
+                        + "agregue una nueva categoria para el producto.",
+                        "Informacion",JOptionPane.WARNING_MESSAGE);
+                
+                //Se prepara el frame para agregar una nueva categoria
+                limpiar();
+                btnGuardar.setText("Guardar");
+                txtID.setEnabled(true);
+                txtID.setText(String.valueOf(idCategoria));
+                txtID.setForeground(Color.LIGHT_GRAY);
+                txtID.setBackground(Color.LIGHT_GRAY);
+                txtID.setEditable(false);
+                btnGuardar.setBackground(Color.red);
+                
+                
+                
+            }else{
+                JOptionPane.showMessageDialog(this, "Se ha eliminado la categoria" ,"Informacion",JOptionPane.WARNING_MESSAGE);
+                categoriaRepositry.eliminar(idCategoria);
+                limpiar();
+            }
             cargarTabla();
         }
     }
     
-    private void guardar(){
-        if(btnGuardar.getText().equalsIgnoreCase("Editar")){
+    private void actualizar() {
+        categoriaRepositry.actualizar(new Categoria(Long.parseLong(txtID.getText()), txtNombre.getText(),
+                txtDescripcion.getText()));
+        limpiar();
+
+        txtNombre.setBorder(txtID.getBorder());
+        txtDescripcion.setBorder(txtID.getBorder());
+    }
+    
+    private void reemplazarCategoria(){
+        
+            //Se valida que todos los campos esten llenos para guardar
+            if (!txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty()) {
+                
+                //Actualizar en la base de datos
+                actualizar();
+                txtID.setEnabled(false);
+                
+            } else {
+                //Todos los campos son obligatorios
+                JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);
+
+                LineBorder border = new LineBorder(Color.red);
+                if (txtNombre.getText().isEmpty()) {
+                    txtNombre.setBorder(border);
+                } else {
+                    txtDescripcion.setBorder(border);
+                }
+            }
+ 
+    }
+    
+    private void guardar() {
+        
+        //Accion para reemplazar a la categoria eliminada que tenia producto
+        if (btnGuardar.getBackground() == Color.red) {
+            reemplazarCategoria();
+            btnGuardar.setBackground(Color.getHSBColor(0, 102, 51));
+            
+        }else if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             btnGuardar.setText("Actualizar");
             txtNombre.setEnabled(true);
             txtDescripcion.setEnabled(true);
@@ -268,18 +332,13 @@ public class FmCategoria extends javax.swing.JFrame {
                 !txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty()){
             
             //Se actualiza en la base de datos
-            categoriaReposity.actualizar(new Categoria(Long.parseLong(txtID.getText()), txtNombre.getText(), 
-                    txtDescripcion.getText()));
-            limpiar();
-            
-            txtNombre.setBorder(txtID.getBorder());
-            txtDescripcion.setBorder(txtID.getBorder());
+            actualizar();
             
         //Validar que todos los campos esten llenos    
         }else if(txtID.getText().isEmpty() && !txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty() ){
             
             //Guardar en la base de datos
-            categoriaReposity.guardar(new Categoria(txtNombre.getText(), txtDescripcion.getText())); 
+            categoriaRepositry.guardar(new Categoria(txtNombre.getText(), txtDescripcion.getText())); 
             limpiar();
             
             txtNombre.setBorder(txtID.getBorder());
@@ -299,10 +358,11 @@ public class FmCategoria extends javax.swing.JFrame {
         }
         cargarTabla();
     }
+    
     private void mostrarInfo(){
         int indiceFila = tbCategorias.getSelectedRow();
         Long idCategoria = (Long)tbCategorias.getValueAt(indiceFila, 0);
-            Categoria categoria = categoriaReposity.buscarPorId(idCategoria);
+            Categoria categoria = categoriaRepositry.buscarPorId(idCategoria);
             
             txtID.setText(String.valueOf(categoria.getId()));
             txtNombre.setText(categoria.getNombre());

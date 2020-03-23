@@ -396,7 +396,7 @@ public class FmBusquedaVentas extends javax.swing.JFrame {
             }
         }
         }
-            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. dd/mm/yyyy", "Alerta", JOptionPane.WARNING_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. dd/mm/yyyy", "Alerta", JOptionPane.WARNING_MESSAGE);
         }else{
             //Todos los campos son obligatorios
             JOptionPane.showMessageDialog(this, "Llenar campos obligatorios", "Alerta", JOptionPane.WARNING_MESSAGE);

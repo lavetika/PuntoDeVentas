@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import objetoNegocio.Cliente;
+import objetoNegocio.Proveedor;
 import repositories.ClienteRepository;
 
 
@@ -160,6 +161,11 @@ public class FmCliente extends javax.swing.JFrame {
                 "ID", "RFC", "NOMBRE", "DIRECCION", "TELEFONO MOVIL", "TELEFONO FIJO"
             }
         ));
+        tbClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbClientesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbClientes);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 580, 170));
@@ -297,6 +303,28 @@ public class FmCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
+    private void tbClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientesMouseClicked
+       mostrarInfo();
+       btnGuardar.setText("Editar");
+    }//GEN-LAST:event_tbClientesMouseClicked
+    private void mostrarInfo(){
+        int indiceFila = tbClientes.getSelectedRow();
+        Long idCliente = (Long)tbClientes.getValueAt(indiceFila, 0);
+            Cliente cliente = clienteRepository.buscarPorId(idCliente);
+            
+            txtID.setText(String.valueOf(cliente.getId()));
+            txtNombre.setText(cliente.getNombre());
+            txtRFC.setText(cliente.getRfc());
+            txtDireccion.setText(cliente.getDireccion());
+            txtTelefonoM.setText(cliente.getTelefono1());
+            txtTelefonoF.setText(cliente.getTelefono2());
+            
+            txtNombre.setEnabled(false);
+            txtRFC.setEnabled(false);
+            txtDireccion.setEnabled(false);
+            txtTelefonoF.setEnabled(false);
+            txtTelefonoM.setEnabled(false);
+    }
     public void guardar(){
         if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             btnGuardar.setText("Actualizar");
@@ -311,7 +339,7 @@ public class FmCliente extends javax.swing.JFrame {
             
             //Se actualiza en la base de datos
             clienteRepository.actualizar(new Cliente(Long.parseLong(txtID.getText()), txtRFC.getText(), 
-                    txtNombre.getText(), txtDireccion.getText(), txtTelefonoF.getText(), txtTelefonoM.getText()));
+                    txtNombre.getText(), txtDireccion.getText(), txtTelefonoM.getText(), txtTelefonoF.getText()));
             limpiar();
             
             txtRFC.setBorder(txtID.getBorder());
@@ -324,7 +352,7 @@ public class FmCliente extends javax.swing.JFrame {
             
             //Guardar en la base de datos
             clienteRepository.guardar(new Cliente(txtRFC.getText(), txtNombre.getText(), txtDireccion.getText(), 
-                    txtTelefonoF.getText(), txtTelefonoM.getText())); 
+                    txtTelefonoM.getText(), txtTelefonoF.getText())); 
             limpiar();
             
             txtRFC.setBorder(txtID.getBorder());
@@ -369,8 +397,8 @@ public class FmCliente extends javax.swing.JFrame {
         txtTelefonoM.setText("");
         txtRFC.setEnabled(true);
         txtNombre.setEnabled(true);
-        txtDireccion.setEditable(true);
-        txtTelefonoF.setEditable(true);
+        txtDireccion.setEnabled(true);
+        txtTelefonoF.setEnabled(true);
         txtTelefonoM.setEnabled(true);        
         btnGuardar.setText("Guardar");
     }
@@ -385,8 +413,8 @@ public class FmCliente extends javax.swing.JFrame {
             fila[1] = cliente.getNombre();
             fila[2] = cliente.getRfc();
             fila[3] = cliente.getDireccion();
-            fila[4] = cliente.getTelefono2();
-            fila[5] = cliente.getTelefono1();
+            fila[4] = cliente.getTelefono1();
+            fila[5] = cliente.getTelefono2();
             modelo.addRow(fila);
         }
     }
