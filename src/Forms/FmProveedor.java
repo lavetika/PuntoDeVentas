@@ -32,23 +32,17 @@ public class FmProveedor extends javax.swing.JFrame {
     ProveedorRepository proveedorRepository;
     ProductoRepository productoRepository;
     
+     /**
+     * Metodo constructor que se encarga de inicializar el frame.
+     * @param padre 
+     */
     public FmProveedor(JFrame padre) {
         initComponents();
         this.setTitle("Proveedor");
         this.setLocationRelativeTo(null);
         this.proveedorRepository = new ProveedorRepository();
         this.productoRepository = new ProductoRepository();
-//        this.setSize(530,666);
         this.cargarTabla();
-        //Imagen de fondo
-//        try {
-//            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
-//            JPanel panel = (JPanel) this.getContentPane();
-//            panel.setBorder(fondo);
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        };
-//        
         txtID.setEnabled(false);
     }
 
@@ -293,6 +287,9 @@ public class FmProveedor extends javax.swing.JFrame {
             evt.consume();            
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
+    /**
+     * Método que se encarga de guardar en la base de datos una nuevo proveedor.
+     */
     private void guardar(){
         //Accion para reemplazar a la categoria eliminada que tenia producto
         if (btnGuardar.getBackground() == Color.red) {
@@ -343,6 +340,9 @@ public class FmProveedor extends javax.swing.JFrame {
         this.cargarTabla();
     }
     
+    /**
+     * Método que se encarga de actualizar los datos de un nuevo proveedor en la base de datos.
+     */
     private void actualizar(){
         proveedorRepository.actualizar(new Proveedor(Long.parseLong(txtID.getText()), txtRFC.getText(), txtNombre.getText(), txtDireccion.getText(), 
                     txtTelefono.getText(), txtPaginaWeb.getText()));
@@ -353,6 +353,11 @@ public class FmProveedor extends javax.swing.JFrame {
             txtDireccion.setBorder(txtID.getBorder());
             
     }
+    
+     /**
+     * Método que se encarga de ingresar una nuevo proveedor al producto en el caso de que la 
+     * proveedor que se elimino tenia un prodcuto asociado.
+     */
     private void reemplazarProveedor() {
 
         //Se valida que todos los campos esten llenos para guardar
@@ -379,6 +384,9 @@ public class FmProveedor extends javax.swing.JFrame {
 
     }
     
+    /**
+     * Método que se encarga de eliminar un registro de la base de datos.
+     */
     private void eliminar(){
         int indiceFila = tbProveedores.getSelectedRow();
         if(indiceFila == -1){
@@ -417,6 +425,10 @@ public class FmProveedor extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Método que se encarga de mostrar la informacion de un proveedor seleccionado
+     * de una tabla en los campos de texto.
+     */
      private void mostrarInfo(){
         int indiceFila = tbProveedores.getSelectedRow();
         Long idProveedor = (Long)tbProveedores.getValueAt(indiceFila, 0);
@@ -436,6 +448,10 @@ public class FmProveedor extends javax.swing.JFrame {
             txtPaginaWeb.setEnabled(false);
     }
     
+    /**
+     * Metodo que se encarga de limpiar todos los campos de texto, para volver
+     * a ingresar datos.
+     */ 
     private void limpiar(){
         txtID.setText("");
         txtNombre.setText("");;
@@ -451,6 +467,10 @@ public class FmProveedor extends javax.swing.JFrame {
         btnGuardar.setText("Guardar");
     }    
     
+     /**
+     * Método que se encarga de mostrar en a tabla todos los registros almacenados
+     * en la base de datos.
+     */
     private void cargarTabla(){
         ArrayList<Proveedor> proveedores = proveedorRepository.buscarTodas();        
         DefaultTableModel modelo = (DefaultTableModel)tbProveedores.getModel();

@@ -30,6 +30,10 @@ public class FmCategoria extends javax.swing.JFrame {
     CategoriaRepository categoriaRepositry;
     ProductoRepository productoRepository;
     
+    /**
+     * Metodo constructor que se encarga de inicializar el frame.
+     * @param padre 
+     */
     public FmCategoria(JFrame padre) {
         initComponents();
         this.setTitle("Categoría");
@@ -37,14 +41,6 @@ public class FmCategoria extends javax.swing.JFrame {
         this.categoriaRepositry = new CategoriaRepository();
         this.productoRepository = new ProductoRepository();
         this.cargarTabla();
-        //Imagen de fondo
-//        try {
-//            ImagenFondo fondo = new ImagenFondo(ImageIO.read(new File("C:/Users/laura/PuntoDeVentas/src/imagenes/blancoconcuadros.jpg")));
-//            JPanel panel = (JPanel) this.getContentPane();
-//            panel.setBorder(fondo);
-//        } catch (IOException ex) {
-//            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
         
         txtID.setEnabled(false);
     }
@@ -235,6 +231,10 @@ public class FmCategoria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
+    /**
+     * Metodo que se encarga de limpiar todos los campos de texto, para volver
+     * a ingresar datos.
+     */
     private void limpiar(){
         txtID.setText("");
         txtNombre.setText("");;
@@ -244,10 +244,23 @@ public class FmCategoria extends javax.swing.JFrame {
         btnGuardar.setText("Guardar");
     }
     
+    /**
+     * Método que se encarga de mostrar en a tabla todos los registros almacenados
+     * en la base de datos.
+     */
     private void cargarTabla(){
-        ArrayList<Categoria> categorias = categoriaRepositry.buscarTodas();        
+        
+        //Lista que almacena todas la categorias registras en la base de datos.
+        ArrayList<Categoria> categorias = categoriaRepositry.buscarTodas();   
+        
+        //Se crea un nuevo modelo de la tabla para realizar modificaciones en ella.
         DefaultTableModel modelo = (DefaultTableModel)tbCategorias.getModel();        
         modelo.setRowCount(0);
+        
+        /*
+        Se obtiene todas las categorias de la lista para irlos mostrando uno
+        por uno en la base de datos.
+        */
         for (Categoria categoria: categorias) {
             Object[] fila = new Object[8];
             fila[0] = categoria.getId();
@@ -257,11 +270,19 @@ public class FmCategoria extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Método que se encarga de eliminar un registro de la base de datos.
+     */
     private void eliminar() {
+        
+        //Se obtiene el indice de la fila seleccionada.
         int indiceFila = tbCategorias.getSelectedRow();
+        
+        //Si no se selecciona una categoria para eliminar, muestra una ventana indicando que no se puede eliminar.
         if (indiceFila == -1) {
             JOptionPane.showMessageDialog(this, "Debes seleccionar una categoría", "Información", JOptionPane.WARNING_MESSAGE);
         } else {
+            
             //Se identifica la categoria que se selecciono y que se desea eliminar.
             Long idCategoria = (Long) tbCategorias.getValueAt(indiceFila, 0);
             
@@ -280,10 +301,9 @@ public class FmCategoria extends javax.swing.JFrame {
                 txtID.setBackground(Color.LIGHT_GRAY);
                 txtID.setEditable(false);
                 btnGuardar.setBackground(Color.red);
-                
-                
-                
             }else{
+                
+                //Si a categoria a eliminar no tiene productos relacionados.
                 JOptionPane.showMessageDialog(this, "Se ha eliminado la categoria" ,"Informacion",JOptionPane.WARNING_MESSAGE);
                 categoriaRepositry.eliminar(idCategoria);
                 limpiar();
@@ -292,15 +312,23 @@ public class FmCategoria extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Método que se encarga de actualizar los datos de una categoria en la base de datos.
+     */
     private void actualizar() {
+        //Se obtiene los nuevos datos de la categoria y se actualizan en la base de datos.
         categoriaRepositry.actualizar(new Categoria(Long.parseLong(txtID.getText()), txtNombre.getText(),
                 txtDescripcion.getText()));
         limpiar();
-
+        
         txtNombre.setBorder(txtID.getBorder());
         txtDescripcion.setBorder(txtID.getBorder());
     }
     
+    /**
+     * Método que se encarga de ingresar una nueva categoria al producto en el caso de que la 
+     * categoria que se elimino tenia un prodcuto asociado.
+     */
     private void reemplazarCategoria(){
         
             //Se valida que todos los campos esten llenos para guardar
@@ -324,18 +352,23 @@ public class FmCategoria extends javax.swing.JFrame {
  
     }
     
+    /**
+     * Método que se encarga de guardar en la base de datos una nueva categoria.
+     */
     private void guardar() {
         
         //Accion para reemplazar a la categoria eliminada que tenia producto
         if (btnGuardar.getBackground() == Color.red) {
             reemplazarCategoria();
             btnGuardar.setBackground(Color.getHSBColor(0, 102, 51));
-            
+        
+        //Accion para cambiar el texto del boton por si se desea actualizar o guardar por primera vez.
         }else if(btnGuardar.getText().equalsIgnoreCase("Editar")){
             btnGuardar.setText("Actualizar");
             txtNombre.setEnabled(true);
             txtDescripcion.setEnabled(true);
-            
+         
+        //Accion si se desea actualizar
         }else if(btnGuardar.getText().equalsIgnoreCase("Actualizar") && !txtID.getText().isEmpty() && 
                 !txtNombre.getText().isEmpty() && !txtDescripcion.getText().isEmpty()){
             
@@ -367,22 +400,31 @@ public class FmCategoria extends javax.swing.JFrame {
         cargarTabla();
     }
     
-    private void mostrarInfo(){
+    /**
+     * Método que se encarga de mostrar la informacion de una categoria seleccionada
+     * de una tabla en los campos de texto.
+     */
+    private void mostrarInfo() {
+        //Se obtiene el indice de la categoria seleccionada en la tabla.
         int indiceFila = tbCategorias.getSelectedRow();
-        Long idCategoria = (Long)tbCategorias.getValueAt(indiceFila, 0);
-            Categoria categoria = categoriaRepositry.buscarPorId(idCategoria);
-            
-            txtID.setText(String.valueOf(categoria.getId()));
-            txtNombre.setText(categoria.getNombre());
-            txtDescripcion.setText(categoria.getDescripcion());
-            
-            txtID.setEnabled(false);
-            txtNombre.setEnabled(false);
-            txtDescripcion.setEnabled(false);
+        
+        //Se la categoria selecciona en la tabla.
+        Long idCategoria = (Long) tbCategorias.getValueAt(indiceFila, 0);
+        Categoria categoria = categoriaRepositry.buscarPorId(idCategoria);
+        
+        //Se muestran sus datos en los campos de textos
+        txtID.setText(String.valueOf(categoria.getId()));
+        txtNombre.setText(categoria.getNombre());
+        txtDescripcion.setText(categoria.getDescripcion());
+        
+        //Para que no se puedan editar los campos de textos.
+        txtID.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtDescripcion.setEnabled(false);
     }
-    
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/categoriaa.png"));
         return retValue;
     }

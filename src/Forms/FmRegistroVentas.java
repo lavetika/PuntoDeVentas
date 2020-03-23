@@ -82,7 +82,6 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbCarrito = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
-        btnDescuento = new javax.swing.JButton();
         txtDescuento = new javax.swing.JTextField();
         txtSubtotal = new javax.swing.JTextField();
         cbCliente = new javax.swing.JComboBox<>();
@@ -109,7 +108,6 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(1270, 598));
-        setPreferredSize(new java.awt.Dimension(1270, 598));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbCliente.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
@@ -117,19 +115,19 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         getContentPane().add(lbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 110, -1));
 
         lbSubtotal.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbSubtotal.setText("SUBTOTAL     $");
-        getContentPane().add(lbSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 160, -1));
+        lbSubtotal.setText("SUBTOTAL        $");
+        getContentPane().add(lbSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 180, -1));
 
         lbDescuento.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        lbDescuento.setText("DESCUENTO %");
-        getContentPane().add(lbDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 160, -1));
+        lbDescuento.setText("DESCUENTO    %");
+        getContentPane().add(lbDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 180, -1));
 
         lbTotal.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbTotal.setText("TOTAL");
         getContentPane().add(lbTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 90, -1));
 
         txtTotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 270, 30));
+        getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 230, 30));
 
         tbCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -168,16 +166,6 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         });
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 150, 40));
 
-        btnDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        btnDescuento.setText("Aplicar");
-        btnDescuento.setToolTipText("");
-        btnDescuento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescuentoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 120, 30));
-
         txtDescuento.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
         txtDescuento.setText("0");
         txtDescuento.addContainerListener(new java.awt.event.ContainerAdapter() {
@@ -191,17 +179,20 @@ public class FmRegistroVentas extends javax.swing.JFrame {
             }
         });
         txtDescuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescuentoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDescuentoKeyTyped(evt);
             }
         });
-        getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 140, 30));
+        getContentPane().add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 230, 30));
 
         txtSubtotal.setFont(new java.awt.Font("Calibri Light", 0, 22)); // NOI18N
-        getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, 270, 30));
+        getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 230, 30));
 
         cbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 270, 30));
+        getContentPane().add(cbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 230, 30));
 
         lbBuscador.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         lbBuscador.setText("BUSCADOR DE PRODUCTOS");
@@ -319,10 +310,6 @@ public class FmRegistroVentas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescuentoActionPerformed
-        txtTotal.setText(String.valueOf(caja.montoFinal(Float.parseFloat(txtSubtotal.getText()), Float.parseFloat(txtDescuento.getText()))));
-    }//GEN-LAST:event_btnDescuentoActionPerformed
-
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
      
         cargarTablaCarrito();
@@ -426,6 +413,11 @@ public class FmRegistroVentas extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtBuscadorKeyTyped
+
+    private void txtDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescuentoKeyReleased
+         txtTotal.setText(String.valueOf(caja.montoFinal(Float.parseFloat(txtSubtotal.getText()), Float.parseFloat(txtDescuento.getText()))));
+
+    }//GEN-LAST:event_txtDescuentoKeyReleased
     private void actualizarSubtotal(){
         //Actualizar precios
         List<Float> montosTotales = new ArrayList<>();
@@ -570,7 +562,6 @@ public class FmRegistroVentas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnDescuento;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JComboBox<String> cbCliente;
