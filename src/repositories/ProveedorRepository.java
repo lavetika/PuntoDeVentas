@@ -14,8 +14,15 @@ import objetoNegocio.Proveedor;
  */
 public class ProveedorRepository extends BaseRepository<Proveedor>{
 
+    /**
+     * Constructor default de la clase
+     */
     public ProveedorRepository() {}
 
+    /**
+     * Método implementado de la clase BaseRepository para guardar un proveedor
+     * @param proveedor 
+     */
     @Override
     public void guardar(Proveedor proveedor) {
         EntityManager entityManager = this.createEntityManager();
@@ -24,6 +31,11 @@ public class ProveedorRepository extends BaseRepository<Proveedor>{
         entityManager.getTransaction().commit();        
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para eliminar un proveedor
+     * por id
+     * @param id 
+     */
     @Override
     public void eliminar(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -35,6 +47,10 @@ public class ProveedorRepository extends BaseRepository<Proveedor>{
         entityManager.getTransaction().commit();        
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para actualizar un proveedor
+     * @param proveedorActualizado 
+     */
     @Override
     public void actualizar(Proveedor proveedorActualizado) {
         EntityManager entityManager = this.createEntityManager();
@@ -52,6 +68,12 @@ public class ProveedorRepository extends BaseRepository<Proveedor>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar un proveedor
+     * por id
+     * @param id
+     * @return 
+     */
     @Override
     public Proveedor buscarPorId(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -61,6 +83,11 @@ public class ProveedorRepository extends BaseRepository<Proveedor>{
         return proveedor;
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar todos los proveedores
+     * y regresa un ArrayList con ellos
+     * @return 
+     */
     @Override
     public ArrayList<Proveedor> buscarTodas() {
         EntityManager entityManager = this.createEntityManager();

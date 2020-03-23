@@ -6,6 +6,14 @@ package repositories;
  * @author Estefanía Aguilar
  */
 public class Control {
+    
+    /**
+     * Esta clase funciona como intermediaria entre la capa de repositorios y la 
+     * presentación, se retornan los objetos repository si estos existen y su
+     * valor es diferente a null, de no ser así se crea uno nuevo y se retorna.
+     **/
+    
+    //Atributos de la clase Control
      private ClienteRepository clienteRepository;
      private CategoriaRepository categoriaRepository;
      private ProductoRepository productoRepository;

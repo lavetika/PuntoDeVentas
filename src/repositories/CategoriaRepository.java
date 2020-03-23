@@ -14,8 +14,15 @@ import objetoNegocio.Categoria;
  */
 public class CategoriaRepository extends BaseRepository<Categoria>{
 
+    /**
+     * Constructor default de la clase
+     */
     public CategoriaRepository() {}
     
+    /**
+     * Método implementado de la clase BaseRepository para guardar una categoría
+     * @param categoria 
+     */
     @Override
     public void guardar(Categoria categoria) {
         EntityManager entityManager = this.createEntityManager();
@@ -24,6 +31,11 @@ public class CategoriaRepository extends BaseRepository<Categoria>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para eliminar una categoría
+     * por id
+     * @param id 
+     */
     @Override
     public void eliminar(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -35,6 +47,10 @@ public class CategoriaRepository extends BaseRepository<Categoria>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para actualizar una categoría
+     * @param categoriaActualizada 
+     */
     @Override
     public void actualizar(Categoria categoriaActualizada) {
         EntityManager entityManager = this.createEntityManager();
@@ -49,6 +65,12 @@ public class CategoriaRepository extends BaseRepository<Categoria>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar una categoría
+     * por id
+     * @param id
+     * @return 
+     */
     @Override
     public Categoria buscarPorId(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -58,6 +80,11 @@ public class CategoriaRepository extends BaseRepository<Categoria>{
         return categoria;
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar todas las categorías
+     * y que regresa un ArrayList con ellas
+     * @return 
+     */
     @Override
     public ArrayList<Categoria> buscarTodas() {
         EntityManager entityManager = this.createEntityManager();

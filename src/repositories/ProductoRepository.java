@@ -16,8 +16,15 @@ import objetoNegocio.Proveedor;
  */
 public class ProductoRepository extends BaseRepository<Producto>{
 
+    /**
+     * Constructor default de la clase
+     */
     public ProductoRepository() {}
     
+    /**
+     * Método implementado de la clase BaseRepository para guardar un producto
+     * @param producto 
+     */
     @Override
     public void guardar(Producto producto) {
         EntityManager entityManager = this.createEntityManager();
@@ -26,6 +33,11 @@ public class ProductoRepository extends BaseRepository<Producto>{
         entityManager.getTransaction().commit();   
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para eliminar un producto
+     * por id
+     * @param id 
+     */
     @Override
     public void eliminar(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -37,6 +49,10 @@ public class ProductoRepository extends BaseRepository<Producto>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para actualizar un producto
+     * @param productoActualizado 
+     */
     @Override
     public void actualizar(Producto productoActualizado) {
         EntityManager entityManager = this.createEntityManager();
@@ -54,6 +70,12 @@ public class ProductoRepository extends BaseRepository<Producto>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar un producto
+     * por id
+     * @param id
+     * @return 
+     */
     @Override
     public Producto buscarPorId(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -63,6 +85,11 @@ public class ProductoRepository extends BaseRepository<Producto>{
         return producto;
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar todos los productos
+     * y regresa un ArrayList con ellos
+     * @return 
+     */
     @Override
     public ArrayList<Producto> buscarTodas() {
         EntityManager entityManager = this.createEntityManager();
@@ -75,6 +102,11 @@ public class ProductoRepository extends BaseRepository<Producto>{
         return new ArrayList<>(productos);  
     }
     
+    /**
+     * Método para obtener un proveedor de un producto
+     * @param idProveedor
+     * @return 
+     */
     public Proveedor obtenerProveedor(Long idProveedor) {
         EntityManager entityManager = this.createEntityManager();
         entityManager.getTransaction().begin();
@@ -83,6 +115,11 @@ public class ProductoRepository extends BaseRepository<Producto>{
         return proveedor;
     }
     
+    /**
+     * Método para obtener una categoría de un producto
+     * @param idCategoria
+     * @return 
+     */
     public Categoria obtenerCategoria(Long idCategoria) {
         EntityManager entityManager = this.createEntityManager();
         entityManager.getTransaction().begin();

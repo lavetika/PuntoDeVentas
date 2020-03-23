@@ -14,8 +14,15 @@ import objetoNegocio.Cliente;
  */
 public class ClienteRepository extends BaseRepository<Cliente>{
 
+    /**
+     * Constructor default de la clase
+     */
     public ClienteRepository() {}
     
+    /**
+     * Método implementado de la clase BaseRepository para guardar un cliente
+     * @param cliente 
+     */
     @Override
     public void guardar(Cliente cliente) {
         EntityManager entityManager = this.createEntityManager();
@@ -24,6 +31,11 @@ public class ClienteRepository extends BaseRepository<Cliente>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para eliminar un cliente
+     * por id
+     * @param id 
+     */
     @Override
     public void eliminar(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -35,6 +47,10 @@ public class ClienteRepository extends BaseRepository<Cliente>{
         entityManager.getTransaction().commit();   
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para actualizar un cliente
+     * @param clienteActualizado 
+     */
     @Override
     public void actualizar(Cliente clienteActualizado) {
         EntityManager entityManager = this.createEntityManager();
@@ -52,6 +68,12 @@ public class ClienteRepository extends BaseRepository<Cliente>{
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar un cliente
+     * por id
+     * @param id
+     * @return 
+     */
     @Override
     public Cliente buscarPorId(long id) {
         EntityManager entityManager = this.createEntityManager();
@@ -61,6 +83,11 @@ public class ClienteRepository extends BaseRepository<Cliente>{
         return cliente;
     }
 
+    /**
+     * Método implementado de la clase BaseRepository para buscar todos los clientes
+     * y que devuelve un ArrayList con ellos
+     * @return 
+     */
     @Override
     public ArrayList<Cliente> buscarTodas() {
         EntityManager entityManager = this.createEntityManager();
